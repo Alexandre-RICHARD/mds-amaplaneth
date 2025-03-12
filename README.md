@@ -4,5 +4,6 @@ Ceci est la répo du site web d'Amap'laneth, une association de type AMAP basée
 
 ## Démarrage
 
-- `pnpm i` Pour installer les dépendances
-- `php artisan serve` Pour démarrer le serveur
+- `pnpm i` et `composer i` Pour installer les dépendances
+- `npm run build` pour build le front
+- `php artisan serve` et `npm run dev` Pour démarrer le serveur
