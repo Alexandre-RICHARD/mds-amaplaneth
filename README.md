@@ -10,5 +10,4 @@ Ceci est la répo du site web d'Amap'laneth, une association de type AMAP basée
 - `php artisan key:generate` Générer la clé encryptage
 - `php artisan migrate` Générer la base de donéees
 - `npm run build` Générer les fichiers vite
-- `php artisan serve` Pour démarrer le serveur
-- `npm run dev` Pour démarrer vite
+- `composer run dev` Pour démarrer le serveur

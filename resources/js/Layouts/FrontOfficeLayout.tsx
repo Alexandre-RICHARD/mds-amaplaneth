@@ -44,7 +44,7 @@ export default function FrontOffice({
                 {header}
             </div>
             <main>{children}</main>
-            <footer className="flex justify-between rounded-t-xl bg-neutral-400 p-5 font-bold">
+            <footer className="mt-24 flex justify-between rounded-t-xl bg-neutral-400 p-5 font-bold">
                 <div className="flex w-[33%] items-center justify-between">
                     <Link href="/">
                         <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
