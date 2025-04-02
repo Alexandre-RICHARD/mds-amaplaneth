@@ -112,7 +112,7 @@ export default function FrontOffice({
                 {header}
             </div>
             <main>{children}</main>
-            <footer className="mt-24 flex justify-between rounded-t-xl bg-neutral-400 p-5 font-bold">
+            <footer className="mt-24 rounded-t-xl bg-neutral-400 p-5 font-bold md:flex md:justify-between">
                 <div className="grid w-[33%] grid-cols-[1fr_2fr] items-center">
                     <Link href="/" className="flex justify-center">
                         <ApplicationLogo className="block h-auto w-[80%] fill-current text-gray-800 dark:text-gray-200" />
@@ -128,7 +128,7 @@ export default function FrontOffice({
                         <a href="tel:0123456789">01 23 45 67 89</a>
                     </div>
                 </div>
-                <nav className="flex flex-col items-end">
+                <nav className="flex flex-col max-md:mt-8 md:items-end">
                     <Link href={route('dashboard')}>Nos Contrats</Link>
                     <Link href={route('dashboard')}>Nos Producteurs</Link>
                     <Link href={route('dashboard')}>
