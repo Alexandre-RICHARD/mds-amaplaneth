@@ -14,15 +14,12 @@ jobs:
 
     - name: Setup SSH and Deploy on VPS
       run: |
-        # Nouvelle solution
-        # Ajouter la clé privée au SSH-Agent
+        # Configuration de la clé SSH
         mkdir -p ~/.ssh
         echo "${{ secrets.DEPLOY_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         eval "$(ssh-agent -s)"
-        ssh-add ~/.ssh/deploy_key
-
-        # Ajouter GitHub aux hôtes connus
+        echo "${{ secrets.DEPLOY_KEY_PASSWORD }}" | ssh-add ~/.ssh/deploy_key
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
         # Débuggage
