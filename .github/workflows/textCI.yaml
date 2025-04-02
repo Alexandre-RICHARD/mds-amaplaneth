@@ -20,22 +20,8 @@ jobs:
         cat ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         eval "$(ssh-agent -s)"
-        # echo "${{ secrets.DEPLOY_KEY_PASSWORD }}" | ssh-add ~/.ssh/deploy_key
         ssh-add ~/.ssh/deploy_key
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-
-        # Débuggage
-        # mkdir -p ~/.ssh && ls -ld ~/.ssh
-        # echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        # ls -l ~/.ssh
-        # cat ~/.ssh/id_rsa
-        # chmod 600 ~/.ssh/id_rsa
-
-        # Configuration de la clé SSH
-        # mkdir -p ~/.ssh
-        # echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        # chmod 600 ~/.ssh/id_rsa
-        # ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
 
         # Connexion SSH et exécution des commandes
         ssh -T ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} << 'EOF'
