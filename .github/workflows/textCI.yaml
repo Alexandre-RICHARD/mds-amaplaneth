@@ -16,10 +16,12 @@ jobs:
       run: |
         # Configuration de la clé SSH
         mkdir -p ~/.ssh
-        echo "${{ secrets.DEPLOY_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
+        echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
+        cat ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         eval "$(ssh-agent -s)"
-        echo "${{ secrets.DEPLOY_KEY_PASSWORD }}" | ssh-add ~/.ssh/deploy_key
+        # echo "${{ secrets.DEPLOY_KEY_PASSWORD }}" | ssh-add ~/.ssh/deploy_key
+        ssh-add ~/.ssh/deploy_key
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
         # Débuggage
