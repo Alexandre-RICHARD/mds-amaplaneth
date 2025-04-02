@@ -15,7 +15,9 @@ jobs:
     - name: Setup SSH and Deploy on VPS
       run: |
         # Débuggage
+        mkdir -p ~/.ssh && ls -ld ~/.ssh
         echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ls -l ~/.ssh
         cat ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
