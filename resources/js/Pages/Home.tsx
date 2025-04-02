@@ -30,7 +30,7 @@ export default function Home() {
             }
             image={helpField}
         >
-            <section className="m-20 flex flex-col items-center">
+            <section className="mx-4 my-20 flex flex-col items-center md:mx-8">
                 <h2 className="my-3 text-2xl font-bold">
                     LES PRODUITS PROPOSÉS
                 </h2>
@@ -38,7 +38,7 @@ export default function Home() {
                     <Swiper
                         className="products"
                         navigation={true}
-                        slidesPerView={5}
+                        slidesPerView={2}
                         spaceBetween={30}
                         modules={[Autoplay, Navigation]}
                         loop={true}
@@ -133,7 +133,7 @@ export default function Home() {
                     </Swiper>
                 </div>
             </section>
-            <section className="m-20 grid grid-cols-[2fr,1fr]">
+            <section className="mx-4 my-20 md:mx-8 md:grid md:grid-cols-[2fr,1fr]">
                 <article className="mr-4">
                     <h2 className="my-3 text-2xl font-bold uppercase">
                         Une association au plus proche des producteurs
@@ -152,16 +152,22 @@ export default function Home() {
                         consequat quam porta habitasse. Nisl et ut sit nam.
                     </p>
                 </article>
-                <img className="h-full w-full rounded-lg" src={nearFarmers} />
+                <img
+                    className="h-full w-full rounded-lg max-md:hidden"
+                    src={nearFarmers}
+                />
             </section>
             <section className="my-20 flex flex-col items-center bg-zinc-800 p-5">
                 <h2 className="my-4 text-2xl font-bold uppercase dark:text-gray-200">
                     Nous sommes ici !
                 </h2>
-                <img src={localisation} className="my-2 h-[55vh]" />
+                <img src={localisation} className="my-2 h-[55vh] w-auto" />
             </section>
-            <section className="m-20 grid grid-cols-[1fr,2fr]">
-                <img className="h-full w-full rounded-lg" src={localFarmers} />
+            <section className="mx-4 my-20 md:mx-8 md:grid md:grid-cols-[1fr,2fr]">
+                <img
+                    className="h-full w-full rounded-lg max-md:hidden"
+                    src={localFarmers}
+                />
                 <article className="ml-4">
                     <h2 className="my-3 text-2xl font-bold uppercase">
                         Des producteurs locaux
@@ -181,7 +187,7 @@ export default function Home() {
                     </p>
                 </article>
             </section>
-            <section className="mx-8 mb-8 mt-20">
+            <section className="mx-4 mb-8 mt-20 md:mx-8">
                 <div className="h-full w-full rounded-lg bg-black p-5">
                     <h2 className="my-4 text-center text-2xl font-bold uppercase dark:text-gray-200">
                         Une convivialité qui rapproche
@@ -235,12 +241,12 @@ export default function Home() {
                     </Swiper>
                 </div>
             </section>
-            <p className="text-center">
+            <p className="mx-4 text-center md:mx-8">
                 Lorem ipsum dolor sit amet consectetur. Tristique in egestas
-                nisi vitae curabitur amet egestas eleifend volutpat. Eget
-                donec non pulvinar proin tristique lectus aliquet velit
-                aliquam. Vulputate arcu magna tortor fusce consequat quam
-                porta habitasse. Nisl et ut sit nam.
+                nisi vitae curabitur amet egestas eleifend volutpat. Eget donec
+                non pulvinar proin tristique lectus aliquet velit aliquam.
+                Vulputate arcu magna tortor fusce consequat quam porta
+                habitasse. Nisl et ut sit nam.
             </p>
         </FrontOffice>
     );
