@@ -14,56 +14,75 @@ jobs:
 
     - name: Setup SSH and Deploy on VPS no change
       run: |
-        # cat ~/.ssh/deploy_key
-
-        echo "${{ secrets.TEST_CICD_SSH_HOST }}"
-        echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}"
-        echo "${{ secrets.TEST_CICD_SSH_USER }}"
-        echo "${{ secrets.TEST_CICD_TARGET_FOLDER }}"
-
+        echo "Création du dossier SSH"
         mkdir -p ~/.ssh
+
+        echo "Écriture de la clé privée"
         echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
+
+        echo "Permissions de la clé"
         chmod 600 ~/.ssh/deploy_key
+
+        echo "Lancement de l'agent SSH"
         eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/deploy_key
+
+        echo "Ajout de l'hôte au known_hosts"
         ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} "echo 'Connexion SSH réussie !'"
+
+        echo "Tentative de connexion SSH"
+        ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} "echo '✅ Connexion SSH réussie !'"
+      # run: |
+      #   # cat ~/.ssh/deploy_key
+
+      #   echo "${{ secrets.TEST_CICD_SSH_HOST }}"
+      #   echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}"
+      #   echo "${{ secrets.TEST_CICD_SSH_USER }}"
+      #   echo "${{ secrets.TEST_CICD_TARGET_FOLDER }}"
+
+      #   mkdir -p ~/.ssh
+      #   echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
+      #   chmod 600 ~/.ssh/deploy_key
+      #   eval "$(ssh-agent -s)"
+      #   ssh-add ~/.ssh/deploy_key
+      #   ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
+      #   ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} "echo 'Connexion SSH réussie !'"
 
 
-        # Connexion SSH et exécution des commandes
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} << 'EOF'
+      #   # Connexion SSH et exécution des commandes
+      #   ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} << 'EOF'
 
-          # Pull de la dernière version
-          cd ${{ secrets.TEST_CICD_TARGET_FOLDER }}
-          git fetch origin
-          git checkout test-CI-CD
-          git pull origin test-CI-CD
+      #     # Pull de la dernière version
+      #     cd ${{ secrets.TEST_CICD_TARGET_FOLDER }}
+      #     git fetch origin
+      #     git checkout test-CI-CD
+      #     git pull origin test-CI-CD
 
-          # Installer les dépendances PHP
-          composer install --no-interaction --prefer-dist --optimize-autoloader
+      #     # Installer les dépendances PHP
+      #     composer install --no-interaction --prefer-dist --optimize-autoloader
 
-          # Vérifier la présence du .env et générer la clé si nécessaire
-          [ -f .env ] || cp .env.example .env
-          php artisan key:generate
+      #     # Vérifier la présence du .env et générer la clé si nécessaire
+      #     [ -f .env ] || cp .env.example .env
+      #     php artisan key:generate
 
-          # Vérifier et créer le lien de stockage
-          php artisan storage:link
+      #     # Vérifier et créer le lien de stockage
+      #     php artisan storage:link
 
-          # Installer les dépendances JS et build
-          npm install
-          npm run build
+      #     # Installer les dépendances JS et build
+      #     npm install
+      #     npm run build
 
-          # Optimisations
-          php artisan cache:clear
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
+      #     # Optimisations
+      #     php artisan cache:clear
+      #     php artisan config:cache
+      #     php artisan route:cache
+      #     php artisan view:cache
 
-          # Migrations
-          php artisan migrate --force
+      #     # Migrations
+      #     php artisan migrate --force
 
-          # Redémarrer les services
-          php artisan queue:restart
-          systemctl restart nginx
-          systemctl restart php8.2-fpm
-        EOF
+      #     # Redémarrer les services
+      #     php artisan queue:restart
+      #     systemctl restart nginx
+      #     systemctl restart php8.2-fpm
+      #   EOF
