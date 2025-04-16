@@ -12,7 +12,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup SSH and Deploy on VPS
+    - name: Setup SSH and Deploy on VPS no change
       run: |
         # Configuration de la clé SSH
         mkdir -p ~/.ssh
