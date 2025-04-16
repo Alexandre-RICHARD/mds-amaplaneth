@@ -38,8 +38,22 @@ export default function Home() {
                     <Swiper
                         className="products"
                         navigation={true}
-                        slidesPerView={2}
+                        slidesPerView={5}
                         spaceBetween={30}
+                        breakpoints={{
+                            425: {
+                                slidesPerView: 2,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 4,
+                                spaceBetween: 40,
+                            },
+                            1024: {
+                                slidesPerView: 5,
+                                spaceBetween: 50,
+                            },
+                        }}
                         modules={[Autoplay, Navigation]}
                         loop={true}
                         autoplay={{

@@ -49,25 +49,25 @@ export default function FrontOffice({
                     className="flex justify-around max-sm:hidden"
                 >
                     <NavLink
-                        href={route('dashboard')}
+                        href={route('home')}
                         active={route().current('contract')}
                     >
                         Nos Contrats
                     </NavLink>
                     <NavLink
-                        href={route('dashboard')}
+                        href={route('home')}
                         active={route().current('farmers')}
                     >
                         Nos Producteurs
                     </NavLink>
                     <NavLink
-                        href={route('dashboard')}
+                        href={route('home')}
                         active={route().current('calendar')}
                     >
                         Calendrier des saisons
                     </NavLink>
                     <NavLink
-                        href={route('dashboard')}
+                        href={route('home')}
                         active={route().current('contact')}
                     >
                         Contact
@@ -81,25 +81,25 @@ export default function FrontOffice({
                 style={{ display: hamburgerOpen ? 'block' : 'none' }}
             >
                 <NavLink
-                    href={route('dashboard')}
+                    href={route('home')}
                     active={route().current('contract')}
                 >
                     Nos Contrats
                 </NavLink>
                 <NavLink
-                    href={route('dashboard')}
+                    href={route('home')}
                     active={route().current('farmers')}
                 >
                     Nos Producteurs
                 </NavLink>
                 <NavLink
-                    href={route('dashboard')}
+                    href={route('home')}
                     active={route().current('calendar')}
                 >
                     Calendrier des saisons
                 </NavLink>
                 <NavLink
-                    href={route('dashboard')}
+                    href={route('home')}
                     active={route().current('contact')}
                 >
                     Contact
@@ -121,23 +121,38 @@ export default function FrontOffice({
                         <address>
                             Rue du Chanoine Jean Brac, 49100 Angers
                         </address>
-                        <a href="mailto:amaplaneth@riseup.net">
+                        <a
+                            className="hover:underline"
+                            href="mailto:amaplaneth@riseup.net"
+                        >
                             amaplaneth@riseup.net
                         </a>
                         <br />
-                        <a href="tel:0123456789">01 23 45 67 89</a>
+                        <a className="hover:underline" href="tel:0123456789">
+                            01 23 45 67 89
+                        </a>
                     </div>
                 </div>
                 <nav className="flex flex-col max-md:mt-8 md:items-end">
-                    <Link href={route('dashboard')}>Nos Contrats</Link>
-                    <Link href={route('dashboard')}>Nos Producteurs</Link>
-                    <Link href={route('dashboard')}>
+                    <Link className="hover:underline" href={route('home')}>
+                        Nos Contrats
+                    </Link>
+                    <Link className="hover:underline" href={route('home')}>
+                        Nos Producteurs
+                    </Link>
+                    <Link className="hover:underline" href={route('home')}>
                         Calendrier des saisons
                     </Link>
-                    <Link href={route('dashboard')}>Contact</Link>
+                    <Link className="hover:underline" href={route('home')}>
+                        Contact
+                    </Link>
                     <hr className="my-2 w-[50%] bg-red-800" />
-                    <Link href={route('dashboard')}>Mentions Légales</Link>
-                    <Link href={route('dashboard')}>Confidentialité</Link>
+                    <Link className="hover:underline" href={route('legal')}>
+                        Mentions Légales
+                    </Link>
+                    <Link className="hover:underline" href={route('home')}>
+                        Confidentialité
+                    </Link>
                 </nav>
             </footer>
         </div>
