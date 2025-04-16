@@ -31,7 +31,9 @@ jobs:
         ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
 
         echo "Tentative de connexion SSH"
+        set +o history
         ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} "echo '✅ Connexion SSH réussie !'"
+        echo "Code de retour SSH: $?"
       # run: |
       #   # cat ~/.ssh/deploy_key
 
