@@ -14,16 +14,21 @@ jobs:
 
     - name: Setup SSH and Deploy on VPS no change
       run: |
-        # Configuration de la clé SSH
+        # cat ~/.ssh/deploy_key
+
+        echo "${{ secrets.TEST_CICD_SSH_HOST }}"
+        echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}"
+        echo "${{ secrets.TEST_CICD_SSH_USER }}"
+        echo "${{ secrets.TEST_CICD_TARGET_FOLDER }}"
+
         mkdir -p ~/.ssh
         echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
-        cat ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
-        ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
         eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/deploy_key
-
+        ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} "echo 'Connexion SSH réussie !'"
+
 
         # Connexion SSH et exécution des commandes
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} << 'EOF'
