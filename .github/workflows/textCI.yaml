@@ -29,7 +29,7 @@ jobs:
         ssh-keyscan -H amaplaneth-angers.fr >> ~/.ssh/known_hosts
 
         echo "🧪 Tentative de connexion SSH"
-        ssh -vvv -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i ~/.ssh/deploy_key rial7539@amaplaneth-angers.fr "echo '✅ Connexion SSH réussie !'"
+        ssh -v -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i ~/.ssh/deploy_key rial7539@amaplaneth-angers.fr "echo '✅ Connexion SSH réussie !'"
       # run: |
       #   # cat ~/.ssh/deploy_key
 
