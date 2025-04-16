@@ -14,26 +14,22 @@ jobs:
 
     - name: Setup SSH and Deploy on VPS no change
       run: |
-        echo "Création du dossier SSH"
+        echo "🔐 Création du dossier SSH"
         mkdir -p ~/.ssh
 
-        echo "Écriture de la clé privée"
+        echo "📥 Écriture de la clé privée"
         echo "${{ secrets.TEST_CICD_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
-
-        echo "Permissions de la clé"
         chmod 600 ~/.ssh/deploy_key
 
-        echo "Lancement de l'agent SSH"
+        echo "🚀 Lancement de l'agent SSH"
         eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/deploy_key
 
-        echo "Ajout de l'hôte au known_hosts"
-        ssh-keyscan -H ${{ secrets.TEST_CICD_SSH_HOST }} >> ~/.ssh/known_hosts
+        echo "🔑 Ajout de l'hôte au known_hosts"
+        ssh-keyscan -H amaplaneth-angers.fr >> ~/.ssh/known_hosts
 
-        echo "Tentative de connexion SSH"
-        set +o history
-        ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.TEST_CICD_SSH_USER }}@${{ secrets.TEST_CICD_SSH_HOST }} "echo '✅ Connexion SSH réussie !'"
-        echo "Code de retour SSH: $?"
+        echo "🧪 Tentative de connexion SSH"
+        ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i ~/.ssh/deploy_key rial7539@amaplaneth-angers.fr "echo '✅ Connexion SSH réussie !'"
       # run: |
       #   # cat ~/.ssh/deploy_key
 
