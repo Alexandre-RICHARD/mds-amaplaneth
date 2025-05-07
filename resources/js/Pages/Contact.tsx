@@ -1,0 +1,143 @@
+import InputLabel from '@/Components/InputLabel';
+import SecondaryButton from '@/Components/SecondaryButton';
+import TextInput from '@/Components/TextInput';
+import FrontOffice from '@/Layouts/FrontOfficeLayout';
+import '@css/home.css';
+import helpField from '@images/help_field.jpg';
+import localisation from '@images/map.png';
+import { useState } from 'react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+export default function Contact() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('Un curieux');
+    const [phone, setPhone] = useState('');
+    const [content, setContent] = useState('');
+    const handleSubmit = (event: Event) => {
+        event.preventDefault();
+        const message = {
+            name: name,
+            email: email,
+            subject: subject,
+            body: content,
+        };
+        console.log(message);
+    };
+
+    return (
+        <FrontOffice
+            header={
+                <div>
+                    <h1 className="text-4xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        CONTACT
+                    </h1>
+                    <p className="max-w-[50%] text-gray-800 dark:text-gray-200">
+                        Lorem ipsum dolor sit amet consectetur. Nisl tempor
+                        commodo ut ornare nibh urna diam. Magnis quis augue
+                        felis viverra at elit nunc nunc sed.
+                    </p>
+                </div>
+            }
+            image={helpField}
+        >
+            <section className="mx-4 my-8 grid grid-cols-2 md:mx-8">
+                <div className="text-[#446D49]">
+                    <h2 className="my-3 text-center text-2xl font-bold">
+                        AMAP L'ANETH
+                    </h2>
+                    <p>
+                        📞
+                        <a className="hover:underline" href="tel:0123456789">
+                            01 23 45 67 89
+                        </a>
+                    </p>
+                    <p>
+                        📨
+                        <a
+                            className="hover:underline"
+                            href="mailto:amaplaneth@riseup.net"
+                        >
+                            amaplaneth@riseup.net
+                        </a>
+                    </p>
+                    <p>Rue du Chanoine Jean Brac, 49100 Angers</p>
+                    <div className="w-full">
+                        <img
+                            src={localisation}
+                            className="my-2 h-[55vh] w-auto"
+                        />
+                    </div>
+                </div>
+                <div className="rounded-2xl bg-[#446D49] p-4 text-white">
+                    <h2 className="my-3 text-center text-2xl font-bold">
+                        CONTACTEZ-NOUS
+                    </h2>
+                    <form onSubmit={handleSubmit} className="w-full p-5">
+                        <div className="flex flex-col">
+                            <InputLabel>Prénom / Nom</InputLabel>
+                            <TextInput
+                                value={name}
+                                required
+                                onChange={(e) => setName(e.target.value)}
+                                className="rounded-lg"
+                            />
+                            {/* <InputError message={'test'} /> */}
+                        </div>
+                        <div className="flex flex-col">
+                            <label>Je suis... </label>
+                            <select
+                                value={subject}
+                                required
+                                onChange={(e) => setSubject(e.target.value)}
+                                className="text-black"
+                                aria-placeholder="--Séléctionnez une option--"
+                            >
+                                <option value={'Un curieux'}>Un curieux</option>
+                                <option value={'Un producteur'}>
+                                    Un producteur
+                                </option>
+                            </select>
+                        </div>
+                        <div className="flex flex-col">
+                            <InputLabel>Email</InputLabel>
+                            <TextInput
+                                value={email}
+                                required
+                                onChange={(e) => setEmail(e.target.value)}
+                                type="email"
+                                className="rounded-lg"
+                            />
+                            {/* <InputError message={'test'} /> */}
+                        </div>
+                        <div className="flex flex-col">
+                            <InputLabel>Numéro de téléphone</InputLabel>
+                            <TextInput
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                type="tel"
+                                className="rounded-lg"
+                            />
+                            {/* <InputError message={'test'} /> */}
+                        </div>
+                        <div className="flex flex-col">
+                            <InputLabel>Message</InputLabel>
+                            <textarea
+                                value={content}
+                                required
+                                onChange={(e) => setContent(e.target.value)}
+                                className="rounded-lg text-black"
+                            />
+                        </div>
+                        <div className="m-4 flex justify-center">
+                            <SecondaryButton type="submit">
+                                Envoyer
+                            </SecondaryButton>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </FrontOffice>
+    );
+}

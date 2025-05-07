@@ -13,4 +13,6 @@ Route::get('/mentions-legales', function () {
     return Inertia::render('Legal');
 })->name('legal');
 
-require __DIR__ . '/auth.php';
+Route::get('/contact', function () {
+    return Inertia::render('Contact');
+})->name('contact');
