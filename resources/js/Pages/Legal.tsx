@@ -33,13 +33,11 @@ export default function Legal() {
                     >
                         https://amaplaneth-angers.fr
                     </a>{' '}
-                    (le « Site »), est édité par l’association Amap l'Aneth,
-                    enregistrée auprès de la préfecture d'Angers sous le numéro
-                    Numéro RNA, ayant son siège situé à Addresse de
-                    l'association, représentée par Annely Boucher dûment
-                    habilitée
-                    <br />
-                    Le numéro individuel TVA de l’éditeur est : Numéro de TVA.
+                    (le « Site »), est édité par l'Association pour le Maintien
+                    de l'Agriculture Paysanne - AMAP l'Aneth, enregistrée auprès
+                    de la préfecture d'Angers sous le numéro W491001181, ayant
+                    son siège situé à 2 rue Pilastre 49100 Angers, représentée
+                    par Annely Boucher dûment habilitée
                 </div>
             </section>
             <section className="mx-4 my-8 flex flex-col md:mx-8">
@@ -48,7 +46,10 @@ export default function Legal() {
                     Le Site est hébergé par la société o2switch, situé 222
                     Boulevard Gustave Flaubert, 63000 Clermont-Ferrand, (contact
                     téléphonique :{' '}
-                    <a className="hover:underline" href="tel:(+33) 4 44 44 60 40">
+                    <a
+                        className="hover:underline"
+                        href="tel:(+33) 4 44 44 60 40"
+                    >
                         (+33) 4 44 44 60 40
                     </a>
                     ).
@@ -65,11 +66,6 @@ export default function Legal() {
             <section className="mx-4 my-8 flex flex-col md:mx-8">
                 <h2 className="my-3 text-2xl font-bold">Nous Contacter</h2>
                 <div className="w-full">
-                    Par téléphone :{' '}
-                    <a className="hover:underline" href="tel:+33123456789">
-                        +33123456789
-                    </a>
-                    <br />
                     Par email :{' '}
                     <a
                         className="hover:underline"
@@ -78,7 +74,7 @@ export default function Legal() {
                         amaplaneth@riseup.net
                     </a>
                     <br />
-                    Par courrier : Adresse postale du contact du site
+                    Par courrier : 2 rue Pilastre 49100 Angers
                     <br />
                 </div>
             </section>
@@ -98,7 +94,10 @@ export default function Legal() {
             <section className="mx-4 my-8 flex flex-col md:mx-8">
                 <p>
                     Génération des mentions légales par{' '}
-                    <a className="hover:underline" href="https://www.legalstart.fr/">
+                    <a
+                        className="hover:underline"
+                        href="https://www.legalstart.fr/"
+                    >
                         Legalstart.fr
                     </a>
                     .

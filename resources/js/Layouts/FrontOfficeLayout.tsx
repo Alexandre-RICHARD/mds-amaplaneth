@@ -67,7 +67,7 @@ export default function FrontOffice({
                         Calendrier des saisons
                     </NavLink>
                     <NavLink
-                        href={route('home')}
+                        href={route('contact')}
                         active={route().current('contact')}
                     >
                         Contact
@@ -99,7 +99,7 @@ export default function FrontOffice({
                     Calendrier des saisons
                 </NavLink>
                 <NavLink
-                    href={route('home')}
+                    href={route('contact')}
                     active={route().current('contact')}
                 >
                     Contact
@@ -112,7 +112,7 @@ export default function FrontOffice({
                 {header}
             </div>
             <main>{children}</main>
-            <footer className="mt-24 rounded-t-xl bg-neutral-400 p-5 font-bold md:flex md:justify-between">
+            <footer className="mt-24 rounded-t-xl bg-[#446D49] p-5 font-bold text-white md:flex md:justify-between">
                 <div className="grid w-[33%] grid-cols-[1fr_2fr] items-center">
                     <Link href="/" className="flex justify-center">
                         <ApplicationLogo className="block h-auto w-[80%] fill-current text-gray-800 dark:text-gray-200" />
@@ -143,7 +143,7 @@ export default function FrontOffice({
                     <Link className="hover:underline" href={route('home')}>
                         Calendrier des saisons
                     </Link>
-                    <Link className="hover:underline" href={route('home')}>
+                    <Link className="hover:underline" href={route('contact')}>
                         Contact
                     </Link>
                     <hr className="my-2 w-[50%] bg-red-800" />

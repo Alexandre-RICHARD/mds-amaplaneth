@@ -19,7 +19,7 @@ export default function Home() {
             header={
                 <div>
                     <h1 className="text-4xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        AMAP L'aneth
+                        AMAP L'ANETH
                     </h1>
                     <p className="max-w-[50%] text-gray-800 dark:text-gray-200">
                         Lorem ipsum dolor sit amet consectetur. Nisl tempor
