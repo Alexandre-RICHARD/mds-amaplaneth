@@ -43,7 +43,7 @@ export default function Contact() {
             }
             image={helpField}
         >
-            <section className="mx-4 my-8 grid grid-cols-2 md:mx-8">
+            <section className="mx-4 my-8 md:mx-8 lg:grid lg:grid-cols-2">
                 <div className="text-[#446D49]">
                     <h2 className="my-3 text-center text-2xl font-bold">
                         AMAP L'ANETH
