@@ -21,5 +21,5 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::post('/send-mail', function (Request $request) {
-    Mail::to('hiphopfraise@gmail.com')->send(new ContactMail($request));
+    Mail::to('amaplaneth@riseup.net')->send(new ContactMail($request));
 })->name('send');
