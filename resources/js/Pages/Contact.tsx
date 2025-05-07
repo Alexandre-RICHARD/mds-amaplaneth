@@ -5,6 +5,7 @@ import FrontOffice from '@/Layouts/FrontOfficeLayout';
 import '@css/home.css';
 import helpField from '@images/help_field.jpg';
 import localisation from '@images/map.png';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -23,7 +24,7 @@ export default function Contact() {
             subject: subject,
             body: content,
         };
-        console.log(message);
+        router.post('/send-mail', message);
     };
 
     return (
