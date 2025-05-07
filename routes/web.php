@@ -16,6 +16,10 @@ Route::get('/mentions-legales', function () {
     return Inertia::render('Legal');
 })->name('legal');
 
+Route::get('/contrat', function () {
+    return Inertia::render('Contract');
+})->name('contract');
+
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
