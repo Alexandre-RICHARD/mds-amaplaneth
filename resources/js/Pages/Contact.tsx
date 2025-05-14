@@ -6,6 +6,7 @@ import '@css/home.css';
 import helpField from '@images/help_field.jpg';
 import localisation from '@images/map.png';
 import { router } from '@inertiajs/react';
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -16,7 +17,7 @@ export default function Contact() {
     const [subject, setSubject] = useState('Un curieux');
     const [phone, setPhone] = useState('');
     const [content, setContent] = useState('');
-    const handleSubmit = (event: Event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const message = {
             name: name,
