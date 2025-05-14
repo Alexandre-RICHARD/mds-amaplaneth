@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+require __DIR__ . '/api.php';
+
 Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
