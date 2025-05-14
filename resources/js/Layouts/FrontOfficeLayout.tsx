@@ -49,7 +49,7 @@ export default function FrontOffice({
                     className="flex justify-around max-sm:hidden"
                 >
                     <NavLink
-                        href={route('home')}
+                        href={route('contract')}
                         active={route().current('contract')}
                     >
                         Nos Contrats
