@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
+import laravel from 'laravel-vite-plugin';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
@@ -10,9 +11,14 @@ export default defineConfig({
         }),
         react(),
     ],
+    test: {
+        setupFiles: ['./vitest.setup.ts'],
+        environment: 'jsdom',
+        globals: true,
+    },
     resolve: {
         alias: {
-            '@': '/resources/js',
+            '@': path.resolve(__dirname, 'resources/js'),
             '@images': '/resources/images',
             '@css': '/resources/css',
         },
