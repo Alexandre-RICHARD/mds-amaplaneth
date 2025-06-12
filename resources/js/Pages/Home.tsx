@@ -3,7 +3,8 @@ import '@css/home.css';
 import distrib from '@images/distrib.jpg';
 import helpField from '@images/help_field.jpg';
 import localFarmers from '@images/local_farmer.jpg';
-import localisation from '@images/map.png';
+import largeMap from '@images/map-large.png';
+import map from '@images/map.png';
 import nearFarmers from '@images/near_farmers.jpg';
 import plant from '@images/plant.jpg';
 import raddish from '@images/raddish.jpg';
@@ -13,7 +14,47 @@ import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+type ImageSlide = {
+    label: string;
+    url: string;
+};
+
 export default function Home() {
+    const imagesToSlide: ImageSlide[] = [
+        {
+            label: 'PRODUITS 1',
+            url: plant,
+        },
+        {
+            label: 'PRODUITS 2',
+            url: raddish,
+        },
+        {
+            label: 'PRODUITS 3',
+            url: salad,
+        },
+        {
+            label: 'PRODUITS 4',
+            url: salad,
+        },
+        {
+            label: 'PRODUITS 5',
+            url: salad,
+        },
+        {
+            label: 'PRODUITS 6',
+            url: salad,
+        },
+        {
+            label: 'PRODUITS 7',
+            url: salad,
+        },
+        {
+            label: 'PRODUITS 8',
+            url: salad,
+        },
+    ];
+
     return (
         <FrontOffice
             header={
@@ -61,89 +102,19 @@ export default function Home() {
                             disableOnInteraction: false,
                         }}
                     >
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${plant})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 1</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{
-                                        backgroundImage: `url(${raddish})`,
-                                    }}
-                                ></div>
-                                <p className="text-center">PRODUITS 2</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 3</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 4</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 5</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 5</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 5</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 5</p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div>
-                                <div
-                                    className="h-[100px] w-auto rounded-lg bg-center"
-                                    style={{ backgroundImage: `url(${salad})` }}
-                                ></div>
-                                <p className="text-center">PRODUITS 5</p>
-                            </div>
-                        </SwiperSlide>
+                        {imagesToSlide.map((image) => (
+                            <SwiperSlide key={image.label}>
+                                <div>
+                                    <div
+                                        className="h-[100px] w-auto rounded-lg bg-center"
+                                        style={{
+                                            backgroundImage: `url(${image.url})`,
+                                        }}
+                                    ></div>
+                                    <p className="text-center">{image.label}</p>
+                                </div>
+                            </SwiperSlide>
+                        ))}
                     </Swiper>
                 </div>
             </section>
@@ -171,11 +142,34 @@ export default function Home() {
                     src={nearFarmers}
                 />
             </section>
-            <section className="my-20 flex flex-col items-center bg-zinc-800 p-5">
+            {/* <section className="my-20 flex flex-col items-center bg-zinc-800 p-5">
                 <h2 className="my-4 text-2xl font-bold uppercase dark:text-gray-200">
                     Nous sommes ici !
                 </h2>
                 <img src={localisation} className="my-2 h-[55vh] w-auto" />
+            </section> */}
+            <section className="my-20 h-[400px] w-full bg-zinc-800 py-10">
+                <h2 className="mb-6 text-center text-2xl font-bold uppercase text-gray-200">
+                    Nous sommes ici !
+                </h2>
+                <img
+                    src={largeMap}
+                    alt="Emplacement de l'AMAP au sein de la ville d'Angers"
+                    srcSet={`${map} 800w, ${largeMap} 1200w`}
+                    sizes="(max-width: 800px) 100vw, 100vw"
+                    className="h-full w-full object-cover"
+                />
+
+                {/* <img
+                    src={largeMap}
+                    alt="Emplacement de l'AMAP au sein de la ville d'Angers"
+                    className="h-full w-full object-cover"
+                />
+                <img
+                    src={map}
+                    alt="Emplacement de l'AMAP au sein de la ville d'Angers"
+                    className="h-full w-full object-cover"
+                /> */}
             </section>
             <section className="mx-4 my-20 md:mx-8 md:grid md:grid-cols-[1fr,2fr]">
                 <img
