@@ -1,4 +1,8 @@
-(globalThis as any).route = (name: string) => `/${name}`;
-(globalThis as any).route = Object.assign((name: string) => `/${name}`, {
-    current: (name: string) => false,
-});
+(globalThis as any).route = (name?: string) => {
+    if (name) {
+        return `/${name}`;
+    }
+    return {
+        current: () => false,
+    };
+};
