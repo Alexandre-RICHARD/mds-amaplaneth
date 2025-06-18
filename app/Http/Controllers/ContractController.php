@@ -13,11 +13,11 @@ class ContractController extends Controller
     {
         Contract::insert([
             'title' => $request->get('title'),
-            'description' => $request->get('descritpion'),
+            'description' => $request->get('description'),
             'price' => $request->get('price'),
             'quantity' => $request->get('quantity')
         ]);
-        return "<p>Hello</p>";
+        return ['success' => 'contrat créé'];
     }
 
     public function allContracts()
@@ -35,7 +35,7 @@ class ContractController extends Controller
         Contract::find($id)
             ->update([
                 'title' => $request->get('title'),
-                'description' => $request->get('descritpion'),
+                'description' => $request->get('description'),
                 'price' => $request->get('price'),
                 'quantity' => $request->get('quantity')
             ]);
