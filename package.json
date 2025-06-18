@@ -4,9 +4,8 @@
     "scripts": {
         "build": "vite build",
         "check-types": "tsc --noEmit",
-        "dev": "vite",
-        "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix",
-        "check-types": "tsc --noemit"
+        "dev": "vite --open",
+        "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
