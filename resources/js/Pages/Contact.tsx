@@ -81,6 +81,7 @@ export default function Contact() {
                             <InputLabel>Prénom / Nom</InputLabel>
                             <TextInput
                                 value={name}
+                                name="name"
                                 required
                                 onChange={(e) => setName(e.target.value)}
                                 className="rounded-lg"
@@ -91,6 +92,7 @@ export default function Contact() {
                             <label>Je suis... </label>
                             <select
                                 value={subject}
+                                name="subject"
                                 required
                                 onChange={(e) => setSubject(e.target.value)}
                                 className="text-black"
@@ -106,6 +108,7 @@ export default function Contact() {
                             <InputLabel>Email</InputLabel>
                             <TextInput
                                 value={email}
+                                name="email"
                                 required
                                 onChange={(e) => setEmail(e.target.value)}
                                 type="email"
@@ -117,6 +120,7 @@ export default function Contact() {
                             <InputLabel>Numéro de téléphone</InputLabel>
                             <TextInput
                                 value={phone}
+                                name="phone"
                                 onChange={(e) => setPhone(e.target.value)}
                                 type="tel"
                                 className="rounded-lg"
@@ -127,6 +131,7 @@ export default function Contact() {
                             <InputLabel>Message</InputLabel>
                             <textarea
                                 value={content}
+                                name="message"
                                 required
                                 onChange={(e) => setContent(e.target.value)}
                                 className="rounded-lg text-black"
