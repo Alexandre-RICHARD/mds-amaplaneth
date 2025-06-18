@@ -4,13 +4,10 @@ Ceci est la répo du site web d'Amap'laneth, une association de type AMAP basée
 
 ## Démarrage
 
-- `npm i` Pour installer les dépendances js
-- `composer i` Pour installer les dépendances php
-- `cp .env.example .env` Générer le fichier .env
-- `php artisan key:generate` Générer la clé encryptage
-- `php artisan migrate` Générer la base de donéees
-- `npm run build` Générer les fichiers vite
-- `composer run dev` Pour démarrer le serveur
-- `pnpm i` et `composer i` Pour installer les dépendances
-- `npm run build` pour build le front
-- `php artisan serve` et `npm run dev` Pour démarrer le serveur
+1. `pnpm install` (ou `npm install`) pour installer les dépendances JavaScript.
+2. `composer install` pour installer les dépendances PHP.
+3. `cp .env.example .env` puis `php artisan key:generate` pour créer le fichier `.env` et générer la clé d'application.
+4. `php artisan migrate` pour créer la base de données.
+5. `composer run dev` pour lancer le serveur Laravel, le listener de queue et Vite.
+
+Vous pouvez également démarrer les services séparément avec `php artisan serve` et `npm run dev`.
