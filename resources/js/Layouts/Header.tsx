@@ -1,6 +1,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLink from '@/Components/NavLink';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Header() {
@@ -18,8 +18,11 @@ export default function Header() {
                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                 </Link>
                 {isAdmin && (
-                    <span className="ml-4 rounded bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                    <span className="ml-4 rounded bg-red-600 px-2 py-1 text-xs font-bold text-white flex items-center gap-2">
                         ADMIN MODE
+                        <button type="button" onClick={() => router.post('/admin/logout')} className="underline text-white">
+                            D\xC3\xA9connexion
+                        </button>
                     </span>
                 )}
                 <button

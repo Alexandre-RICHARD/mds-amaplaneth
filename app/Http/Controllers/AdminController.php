@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
+use App\Mail\AdminForgotPasswordMail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,7 +23,10 @@ class AdminController extends Controller
             if ($position === count($sequence)) {
                 $request->session()->forget('admin_key_position');
                 $token = Str::random(40);
+                $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+                $expires = Carbon::now()->addMinutes($duration)->timestamp;
                 $request->session()->put('admin_login_token', $token);
+                $request->session()->put('admin_login_token_expires', $expires);
 
                 return ['token' => $token];
             }
@@ -35,7 +41,9 @@ class AdminController extends Controller
 
     public function loginPage(Request $request): Response
     {
-        if ($request->session()->get('admin_login_token') !== $request->query('token')) {
+        $token = $request->session()->get('admin_login_token');
+        $expires = $request->session()->get('admin_login_token_expires');
+        if (!$token || $token !== $request->query('token') || $expires < time()) {
             abort(403);
         }
 
@@ -46,7 +54,9 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        if ($request->session()->get('admin_login_token') !== $request->input('token')) {
+        $token = $request->session()->get('admin_login_token');
+        $expires = $request->session()->get('admin_login_token_expires');
+        if (!$token || $token !== $request->input('token') || $expires < time()) {
             abort(403);
         }
 
@@ -60,8 +70,26 @@ class AdminController extends Controller
         }
 
         $request->session()->forget('admin_login_token');
+        $request->session()->forget('admin_login_token_expires');
         $request->session()->put('is_admin', true);
 
         return redirect()->route('home');
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->forget('is_admin');
+
+        return redirect()->route('home');
+    }
+
+    public function forgotPassword()
+    {
+        $email = env('ADMIN_BACKUP_EMAIL');
+        if ($email) {
+            Mail::to($email)->send(new AdminForgotPasswordMail());
+        }
+
+        return back();
     }
 }
