@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('producer_contracts', function (Blueprint $table) {
             $table->foreignId('id_producer');
-            $table->foreignId('id_product');
+            $table->foreignId('id_contract');
         });
     }
 

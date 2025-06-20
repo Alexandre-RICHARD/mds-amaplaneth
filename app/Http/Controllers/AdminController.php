@@ -10,12 +10,27 @@ use Inertia\Response;
 
 class AdminController extends Controller
 {
-    public function token(): array
+    public function keyStep(Request $request)
     {
-        $token = Str::random(40);
-        session(['admin_login_token' => $token]);
+        $sequence = explode(',', env('ADMIN_SEQUENCE'));
+        $position = $request->session()->get('admin_key_position', 0);
 
-        return ['token' => $token];
+        if ($request->query('key') === ($sequence[$position] ?? null)) {
+            $position++;
+            if ($position === count($sequence)) {
+                $request->session()->forget('admin_key_position');
+                $token = Str::random(40);
+                $request->session()->put('admin_login_token', $token);
+
+                return ['token' => $token];
+            }
+
+            $request->session()->put('admin_key_position', $position);
+        } else {
+            $request->session()->put('admin_key_position', 0);
+        }
+
+        return [];
     }
 
     public function loginPage(Request $request): Response

@@ -10,12 +10,15 @@ class ImageController extends Controller
 {
     public function createImage(Request $request)
     {
-        Image::insert([
-            'title' => $request->get('title'),
-            'alt_text' => $request->get('alt_text'),
-            'url' => $request->get('url'),
+        $data = $request->validate([
+            'title' => ['required', 'string'],
+            'alt_text' => ['required', 'string'],
+            'url' => ['required', 'string'],
         ]);
-        return "success";
+
+        Image::create($data);
+
+        return 'success';
     }
 
     public function allImages()
@@ -30,12 +33,14 @@ class ImageController extends Controller
 
     public function editImage(int $id, Request $request)
     {
-        Image::find($id)
-            ->update([
-                'title' => $request->get('title'),
-                'alt_text' => $request->get('alt_text'),
-                'url' => $request->get('url'),
-            ]);
+        $data = $request->validate([
+            'title' => ['required', 'string'],
+            'alt_text' => ['required', 'string'],
+            'url' => ['required', 'string'],
+        ]);
+
+        Image::findOrFail($id)->update($data);
+
         return ['success' => 'image mis à jour'];
     }
 

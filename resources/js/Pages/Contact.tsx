@@ -78,8 +78,9 @@ export default function Contact() {
                     </h2>
                     <form onSubmit={handleSubmit} className="w-full p-5">
                         <div className="flex flex-col">
-                            <InputLabel>Prénom / Nom</InputLabel>
+                            <InputLabel htmlFor="name">Prénom / Nom</InputLabel>
                             <TextInput
+                                id="name"
                                 value={name}
                                 name="name"
                                 required
@@ -89,8 +90,9 @@ export default function Contact() {
                             {/* <InputError message={'test'} /> */}
                         </div>
                         <div className="flex flex-col">
-                            <label>Je suis... </label>
+                            <label htmlFor="subject">Je suis... </label>
                             <select
+                                id="subject"
                                 value={subject}
                                 name="subject"
                                 required
@@ -105,8 +107,9 @@ export default function Contact() {
                             </select>
                         </div>
                         <div className="flex flex-col">
-                            <InputLabel>Email</InputLabel>
+                            <InputLabel htmlFor="email">Email</InputLabel>
                             <TextInput
+                                id="email"
                                 value={email}
                                 name="email"
                                 required
@@ -117,8 +120,9 @@ export default function Contact() {
                             {/* <InputError message={'test'} /> */}
                         </div>
                         <div className="flex flex-col">
-                            <InputLabel>Numéro de téléphone</InputLabel>
+                            <InputLabel htmlFor="phone">Numéro de téléphone</InputLabel>
                             <TextInput
+                                id="phone"
                                 value={phone}
                                 name="phone"
                                 onChange={(e) => setPhone(e.target.value)}
@@ -128,8 +132,9 @@ export default function Contact() {
                             {/* <InputError message={'test'} /> */}
                         </div>
                         <div className="flex flex-col">
-                            <InputLabel>Message</InputLabel>
+                            <InputLabel htmlFor="message">Message</InputLabel>
                             <textarea
+                                id="message"
                                 value={content}
                                 name="message"
                                 required

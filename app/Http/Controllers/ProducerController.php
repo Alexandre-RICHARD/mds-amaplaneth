@@ -10,16 +10,19 @@ class ProducerController extends Controller
 {
     public function createProducer(Request $request)
     {
-        Producer::insert([
-            'profile_picture' => $request->get('profile_picture'),
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'address_road' => $request->get('address_road'),
-            'zipcode' => $request->get('zipcode'),
-            'city' => $request->get('city'),
-            'description' => $request->get('description')
+        $data = $request->validate([
+            'profile_picture' => ['required', 'string'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'address_road' => ['required', 'string'],
+            'zipcode' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'description' => ['required', 'string'],
         ]);
-        return "success";
+
+        Producer::create($data);
+
+        return 'success';
     }
 
     public function allProducers()
@@ -34,16 +37,18 @@ class ProducerController extends Controller
 
     public function editProducer(int $id, Request $request)
     {
-        Producer::find($id)
-            ->update([
-                'profile_picture' => $request->get('profile_picture'),
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'address_road' => $request->get('address_road'),
-                'zipcode' => $request->get('zipcode'),
-                'city' => $request->get('city'),
-                'description' => $request->get('description')
-            ]);
+        $data = $request->validate([
+            'profile_picture' => ['required', 'string'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'address_road' => ['required', 'string'],
+            'zipcode' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'description' => ['required', 'string'],
+        ]);
+
+        Producer::findOrFail($id)->update($data);
+
         return ['success' => 'Producer mis à jour'];
     }
 
