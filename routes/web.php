@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Mail\ContactMail;
 use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Application;
