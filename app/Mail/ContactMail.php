@@ -30,7 +30,7 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         $subject = '';
-        if ($this->message->subject == "Je suis un producteur") {
+        if ($this->message->subject == "Un producteur") {
             $subject = 'Prise de contact du producteur ' . $this->message->name;
         } else {
             $subject = 'Demande de renseignement de ' . $this->message->name;
@@ -49,7 +49,7 @@ class ContactMail extends Mailable
         return new Content(
             view: 'mail',
             with: [
-                'content' => $this->message->content
+                'content' => $this->message->body,
             ]
         );
     }

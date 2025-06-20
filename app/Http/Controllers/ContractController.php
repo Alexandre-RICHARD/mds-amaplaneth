@@ -11,12 +11,15 @@ class ContractController extends Controller
 
     public function createContract(Request $request)
     {
-        Contract::insert([
-            'title' => $request->get('title'),
-            'description' => $request->get('description'),
-            'price' => $request->get('price'),
-            'quantity' => $request->get('quantity')
+        $data = $request->validate([
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric'],
+            'quantity' => ['required', 'integer'],
         ]);
+
+        Contract::create($data);
+
         return ['success' => 'contrat créé'];
     }
 
@@ -32,13 +35,15 @@ class ContractController extends Controller
 
     public function editContract(int $id, Request $request)
     {
-        Contract::find($id)
-            ->update([
-                'title' => $request->get('title'),
-                'description' => $request->get('description'),
-                'price' => $request->get('price'),
-                'quantity' => $request->get('quantity')
-            ]);
+        $data = $request->validate([
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric'],
+            'quantity' => ['required', 'integer'],
+        ]);
+
+        Contract::findOrFail($id)->update($data);
+
         return ['success' => 'contrat mis à jour'];
     }
 

@@ -6,6 +6,8 @@ use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
+Route::middleware('admin')->group(function () {
+
 Route::group(['prefix' => 'contracts'], function () {
     Route::post('', [ContractController::class, 'createContract'])->name('contracts.store');
     Route::get('{id}', [ContractController::class, 'getContract'])->name('contracts.read');
@@ -36,4 +38,6 @@ Route::group(['prefix' => 'products'], function () {
     Route::get('', [ProductController::class, 'allProducts'])->name('products.show');
     Route::put('{id}', [ProductController::class, 'editProduct'])->name('products.update');
     Route::delete('{id}', [ProductController::class, 'destroyProduct'])->name('products.destroy');
+});
+
 });

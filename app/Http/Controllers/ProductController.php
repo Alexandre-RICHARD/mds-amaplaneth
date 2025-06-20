@@ -10,12 +10,15 @@ class ProductController extends Controller
 {
     public function createProduct(Request $request)
     {
-        Product::insert([
-            'label' => $request->get('label'),
-            'season_start' => $request->get('season_start'),
-            'season_end' => $request->get('season_end'),
+        $data = $request->validate([
+            'label' => ['required', 'string'],
+            'season_start' => ['required', 'string'],
+            'season_end' => ['required', 'string'],
         ]);
-        return "success";
+
+        Product::create($data);
+
+        return 'success';
     }
 
     public function allProducts()
@@ -30,12 +33,14 @@ class ProductController extends Controller
 
     public function editProduct(int $id, Request $request)
     {
-        Product::find($id)
-            ->update([
-                'label' => $request->get('label'),
-                'season_start' => $request->get('season_start'),
-                'season_end' => $request->get('season_end'),
-            ]);
+        $data = $request->validate([
+            'label' => ['required', 'string'],
+            'season_start' => ['required', 'string'],
+            'season_end' => ['required', 'string'],
+        ]);
+
+        Product::findOrFail($id)->update($data);
+
         return ['success' => 'Product mis à jour'];
     }
 

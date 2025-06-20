@@ -30,6 +30,6 @@ Route::post('/send-mail', function (Request $request) {
     Mail::to('amaplaneth@riseup.net')->send(new ContactMail($request));
 })->name('send');
 
-Route::get('/admin/token', [AdminController::class, 'token'])->name('admin.token');
+Route::get('/admin/key-step', [AdminController::class, 'keyStep'])->name('admin.keyStep');
 Route::get('/admin/login', [AdminController::class, 'loginPage'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');

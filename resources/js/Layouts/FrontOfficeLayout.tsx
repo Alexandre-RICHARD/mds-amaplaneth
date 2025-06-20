@@ -9,36 +9,18 @@ export default function FrontOffice({
     children,
 }: PropsWithChildren<{ header?: ReactNode; image?: string }>) {
     useEffect(() => {
-        const sequence = [
-            'ArrowUp',
-            'ArrowUp',
-            'ArrowDown',
-            'ArrowDown',
-            'ArrowLeft',
-            'ArrowRight',
-            'ArrowLeft',
-            'ArrowRight',
-            'b',
-            'a',
-        ];
-        let position = 0;
         function onKeyDown(e: KeyboardEvent) {
-            if (e.key === sequence[position]) {
-                position += 1;
-                if (position === sequence.length) {
-                    fetch(route('admin.token'))
-                        .then((r) => r.json())
-                        .then((data) => {
-                            window.location.href = route('admin.login', {
-                                token: data.token,
-                            });
+            fetch(route('admin.keyStep', { key: e.key }))
+                .then((r) => r.json())
+                .then((data) => {
+                    if (data.token) {
+                        window.location.href = route('admin.login', {
+                            token: data.token,
                         });
-                    position = 0;
-                }
-            } else {
-                position = 0;
-            }
+                    }
+                });
         }
+
         window.addEventListener('keydown', onKeyDown);
         return () => window.removeEventListener('keydown', onKeyDown);
     }, []);
