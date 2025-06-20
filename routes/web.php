@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Mail\ContactMail;
+use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -29,3 +30,7 @@ Route::get('/contact', function () {
 Route::post('/send-mail', function (Request $request) {
     Mail::to('amaplaneth@riseup.net')->send(new ContactMail($request));
 })->name('send');
+
+Route::get('/admin/token', [AdminController::class, 'token'])->name('admin.token');
+Route::get('/admin/login', [AdminController::class, 'loginPage'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
