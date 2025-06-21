@@ -3,7 +3,9 @@ import { describe, expect, it, vi } from 'vitest';
 import Producers from '../resources/js/Pages/Producers';
 
 vi.mock('@inertiajs/react', () => ({
-    usePage: () => ({ props: { isAdmin: true } }),
+    usePage: () => ({ props: { isAdmin: true, adminSequence: [] } }),
+    router: { post: vi.fn() },
+    Link: (props: any) => <a {...props}>{props.children}</a>,
 }));
 
 global.fetch = vi.fn().mockResolvedValue({
