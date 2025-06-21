@@ -1,3 +1,4 @@
+import { useToast } from '@/Components/ToastProvider';
 import { router } from '@inertiajs/react';
 import { FormEvent, useState } from 'react';
 
@@ -5,6 +6,7 @@ export default function AdminLogin() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [showForgot, setShowForgot] = useState(false);
+    const { addToast } = useToast();
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -17,7 +19,19 @@ export default function AdminLogin() {
 
     function handleForgotSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        router.post('/admin/forgot-password', { email });
+        router.post(
+            '/admin/forgot-password',
+            { email },
+            {
+                onSuccess: () =>
+                    addToast({
+                        title: 'Email envoyé',
+                        description:
+                            'Un mail de réinitialisation a été envoyé.',
+                        variant: 'success',
+                    }),
+            },
+        );
     }
 
     return (
