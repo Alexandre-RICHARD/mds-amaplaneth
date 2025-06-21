@@ -20,7 +20,13 @@ export default function FrontOffice({
                 position++;
                 if (position === sequence.length) {
                     position = 0;
-                    fetch(route('admin.keyStep'))
+                    fetch(route('admin.keyStep'), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ sequence }),
+                    })
                         .then((r) => r.json())
                         .then((data) => {
                             if (data.token) {

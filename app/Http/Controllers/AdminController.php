@@ -16,6 +16,11 @@ class AdminController extends Controller
 {
     public function keyStep(Request $request)
     {
+        $sequence = $request->input('sequence', []);
+        if ($sequence !== explode(',', (string) env('ADMIN_SEQUENCE'))) {
+            abort(403);
+        }
+
         $token = Str::random(40);
         $duration = env('ADMIN_TOKEN_LIFETIME', 30);
         $expires = Carbon::now()->addMinutes($duration)->timestamp;
