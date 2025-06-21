@@ -4,17 +4,15 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class AdminForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private string $url)
-    {
-    }
+    public function __construct(private string $url) {}
 
     public function envelope(): Envelope
     {

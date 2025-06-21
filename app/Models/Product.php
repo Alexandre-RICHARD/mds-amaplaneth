@@ -9,11 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = "products";
+    protected $table = 'products';
 
     protected $fillable = [
         'label',
         'season_start',
-        'season_end'
+        'season_end',
     ];
 }

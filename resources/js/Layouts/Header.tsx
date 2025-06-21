@@ -13,7 +13,7 @@ export default function Header() {
     }
     return (
         <div>
-            <header className="sticky top-0 z-20 flex w-full justify-between rounded-b-xl bg-[#446D49] p-5 uppercase text-white">
+            <header className="sticky top-0 z-20 flex w-full justify-between bg-[#446D49] p-5 uppercase text-white">
                 <Link href="/">
                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                 </Link>

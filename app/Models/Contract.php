@@ -9,12 +9,12 @@ class Contract extends Model
 {
     use HasFactory;
 
-    protected $table = "contracts";
+    protected $table = 'contracts';
 
     protected $fillable = [
         'title',
         'description',
         'price',
-        'quantity'
+        'quantity',
     ];
 }

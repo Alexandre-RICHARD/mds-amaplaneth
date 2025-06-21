@@ -9,7 +9,7 @@ class Producer extends Model
 {
     use HasFactory;
 
-    protected $table = "producers";
+    protected $table = 'producers';
 
     protected $fillable = [
         'profile_picture',
@@ -18,6 +18,6 @@ class Producer extends Model
         'address_road',
         'zipcode',
         'city',
-        'description'
+        'description',
     ];
 }

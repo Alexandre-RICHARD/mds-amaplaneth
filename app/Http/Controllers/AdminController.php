@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminForgotPasswordMail;
+use App\Models\AdminPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
-use App\Models\AdminPassword;
-use App\Mail\AdminForgotPasswordMail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,7 +34,7 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('admin_login_token');
         $expires = $request->session()->get('admin_login_token_expires');
-        if (!$token || $expires < time()) {
+        if (! $token || $expires < time()) {
             abort(403);
         }
 
@@ -45,7 +45,7 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('admin_login_token');
         $expires = $request->session()->get('admin_login_token_expires');
-        if (!$token || $expires < time()) {
+        if (! $token || $expires < time()) {
             abort(403);
         }
 
@@ -55,7 +55,7 @@ class AdminController extends Controller
 
         $admin = AdminPassword::find(1);
         $hash = $admin?->password;
-        if (!$hash || !Hash::check($request->input('password'), $hash)) {
+        if (! $hash || ! Hash::check($request->input('password'), $hash)) {
             return back()->withErrors(['password' => 'Mot de passe invalide']);
         }
 
@@ -108,7 +108,7 @@ class AdminController extends Controller
     {
         $admin = AdminPassword::find(1);
         $token = $request->query('token');
-        if (!$admin || !$admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
+        if (! $admin || ! $admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
             abort(403);
         }
 
@@ -121,7 +121,7 @@ class AdminController extends Controller
     {
         $admin = AdminPassword::find(1);
         $token = $request->input('token');
-        if (!$admin || !$admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
+        if (! $admin || ! $admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
             abort(403);
         }
 

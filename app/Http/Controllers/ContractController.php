@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
-
     public function createContract(Request $request)
     {
         $data = $request->validate([
