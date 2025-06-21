@@ -14,7 +14,7 @@ export function useToast() {
 }
 
 export default function ToastProvider({ children }: PropsWithChildren) {
-    const [toasts, setToasts] = useState<ToastProps[]>([]);
+    const [toasts, setToasts] = useState<Omit<ToastProps, 'onClose'>[]>([]);
 
     const addToast = (toast: Omit<ToastProps, 'id' | 'onClose'>) => {
         const id = Date.now() + Math.random();

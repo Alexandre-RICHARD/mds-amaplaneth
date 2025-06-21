@@ -4,7 +4,8 @@
     "scripts": {
         "check-types": "tsc --noEmit",
         "dev": "vite --open",
-        "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix",
+        "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
+        "lint-fix": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix",
         "build": "tsc && vite build",
         "test": "vitest"
     },

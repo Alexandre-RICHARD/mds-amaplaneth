@@ -1,6 +1,6 @@
 import backgroundVector from '@images/background.svg';
+import { router, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
-import { usePage, router } from '@inertiajs/react';
 import Footer from './Footer';
 import Header from './Header';
 
