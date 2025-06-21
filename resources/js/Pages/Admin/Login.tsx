@@ -9,8 +9,12 @@ export default function AdminLogin({ token }: { token: string }) {
         router.post('/admin/login', { password, token });
     }
 
+    function handleForgot() {
+        router.post('/admin/forgot-password');
+    }
+
     return (
-        <div className="flex h-screen items-center justify-center">
+        <div className="flex h-screen flex-col items-center justify-center gap-4">
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
                 <input
                     type="password"
@@ -25,6 +29,13 @@ export default function AdminLogin({ token }: { token: string }) {
                     Valider
                 </button>
             </form>
+            <button
+                type="button"
+                onClick={handleForgot}
+                className="text-sm underline"
+            >
+                Mot de passe oubli\u00E9 ?
+            </button>
         </div>
     );
 }

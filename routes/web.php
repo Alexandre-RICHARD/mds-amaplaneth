@@ -33,3 +33,5 @@ Route::post('/send-mail', function (Request $request) {
 Route::get('/admin/key-step', [AdminController::class, 'keyStep'])->name('admin.keyStep');
 Route::get('/admin/login', [AdminController::class, 'loginPage'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+Route::post('/admin/forgot-password', [AdminController::class, 'forgotPassword'])->name('admin.forgot');
