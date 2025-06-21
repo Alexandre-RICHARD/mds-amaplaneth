@@ -14,6 +14,7 @@ global.fetch = vi.fn().mockResolvedValue({
             {
                 id: 1,
                 profile_picture: 1,
+                images: [],
                 first_name: 'John',
                 last_name: 'Doe',
                 address_road: '1 rue test',

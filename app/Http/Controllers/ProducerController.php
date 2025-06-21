@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producer;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class ProducerController extends Controller
@@ -17,21 +18,30 @@ class ProducerController extends Controller
             'zipcode' => ['required', 'string'],
             'city' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'pictures' => ['array'],
+            'pictures.*' => ['integer'],
         ]);
 
-        Producer::create($data);
+        $pictures = $data['pictures'] ?? [];
+        unset($data['pictures']);
+
+        $producer = Producer::create($data);
+
+        if (!empty($pictures)) {
+            $producer->images()->attach($pictures);
+        }
 
         return 'success';
     }
 
     public function allProducers()
     {
-        return Producer::all();
+        return Producer::with('images')->get();
     }
 
     public function getProducer(int $id)
     {
-        return Producer::find($id);
+        return Producer::with('images')->find($id);
     }
 
     public function editProducer(int $id, Request $request)
@@ -44,9 +54,16 @@ class ProducerController extends Controller
             'zipcode' => ['required', 'string'],
             'city' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'pictures' => ['array'],
+            'pictures.*' => ['integer'],
         ]);
 
-        Producer::findOrFail($id)->update($data);
+        $pictures = $data['pictures'] ?? [];
+        unset($data['pictures']);
+
+        $producer = Producer::findOrFail($id);
+        $producer->update($data);
+        $producer->images()->sync($pictures);
 
         return ['success' => 'Producer mis à jour'];
     }

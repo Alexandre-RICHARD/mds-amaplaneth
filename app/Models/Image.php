@@ -16,4 +16,9 @@ class Image extends Model
         'alt_text',
         'url',
     ];
+
+    public function producers()
+    {
+        return $this->belongsToMany(Producer::class, 'producer_images', 'image_id', 'producer_id');
+    }
 }
