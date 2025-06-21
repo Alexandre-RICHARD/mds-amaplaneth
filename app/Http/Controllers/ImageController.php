@@ -12,10 +12,20 @@ class ImageController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string'],
             'alt_text' => ['required', 'string'],
-            'url' => ['required', 'string'],
+            'file' => ['required', 'file', 'image'],
         ]);
 
-        Image::create($data);
+        $file = $data['file'];
+        unset($data['file']);
+
+        $binary = file_get_contents($file->getRealPath());
+
+        Image::create([
+            'title' => $data['title'],
+            'alt_text' => $data['alt_text'],
+            'url' => 'data:' . $file->getMimeType() . ';base64,' . base64_encode($binary),
+            'data' => $binary,
+        ]);
 
         return 'success';
     }
@@ -35,10 +45,20 @@ class ImageController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string'],
             'alt_text' => ['required', 'string'],
-            'url' => ['required', 'string'],
+            'file' => ['file', 'image'],
         ]);
 
-        Image::findOrFail($id)->update($data);
+        $image = Image::findOrFail($id);
+        $image->title = $data['title'];
+        $image->alt_text = $data['alt_text'];
+
+        if ($request->file('file')) {
+            $binary = file_get_contents($request->file('file')->getRealPath());
+            $image->data = $binary;
+            $image->url = 'data:' . $request->file('file')->getMimeType() . ';base64,' . base64_encode($binary);
+        }
+
+        $image->save();
 
         return ['success' => 'image mis à jour'];
     }

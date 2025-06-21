@@ -15,6 +15,7 @@ class Image extends Model
         'title',
         'alt_text',
         'url',
+        'data',
     ];
 
     public function producers()
