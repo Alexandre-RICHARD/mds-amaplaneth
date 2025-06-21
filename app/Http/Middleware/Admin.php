@@ -10,7 +10,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         if (!$request->session()->get('is_admin')) {
-            return response()->json(['error' => 'Forbidden'], 403);
+            return redirect()->route('home');
         }
 
         return $next($request);

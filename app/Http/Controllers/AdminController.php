@@ -18,7 +18,7 @@ class AdminController extends Controller
     {
         $sequence = $request->input('sequence', []);
         if ($sequence !== explode(',', (string) env('ADMIN_SEQUENCE'))) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         $token = Str::random(40);
@@ -35,7 +35,7 @@ class AdminController extends Controller
         $token = $request->session()->get('admin_login_token');
         $expires = $request->session()->get('admin_login_token_expires');
         if (!$token || $expires < time()) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         return Inertia::render('Admin/Login');
@@ -46,7 +46,7 @@ class AdminController extends Controller
         $token = $request->session()->get('admin_login_token');
         $expires = $request->session()->get('admin_login_token_expires');
         if (!$token || $expires < time()) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         $request->validate([
@@ -109,7 +109,7 @@ class AdminController extends Controller
         $admin = AdminPassword::find(1);
         $token = $request->query('token');
         if (!$admin || !$admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         return Inertia::render('Admin/SetPassword', [
@@ -122,7 +122,7 @@ class AdminController extends Controller
         $admin = AdminPassword::find(1);
         $token = $request->input('token');
         if (!$admin || !$admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         $request->validate([
