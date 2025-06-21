@@ -27,6 +27,8 @@ export default function Producers() {
     const [search, setSearch] = useState('');
     const [editing, setEditing] = useState<Producer | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [deleteId, setDeleteId] = useState<number | null>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const { props } = usePage<{ isAdmin: boolean }>();
     const isAdmin = props.isAdmin;
     const { addToast } = useToast();
@@ -47,11 +49,21 @@ export default function Producers() {
     }
 
     function handleDelete(id: number) {
-        window.axios.delete(route('producers.destroy', id)).then(() => {
+        setDeleteId(id);
+        setShowDeleteModal(true);
+    }
+
+    function confirmDelete() {
+        if (deleteId === null) {
+            return;
+        }
+        window.axios.delete(route('producers.destroy', deleteId)).then(() => {
             addToast({
                 title: 'Producteur supprimé',
                 variant: 'success',
             });
+            setShowDeleteModal(false);
+            setDeleteId(null);
             fetchProducers();
         });
     }
@@ -264,6 +276,25 @@ export default function Producers() {
                         </DangerButton>
                     </div>
                 </form>
+            </Modal>
+            <Modal
+                show={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+            >
+                <div className="space-y-4 p-6">
+                    <p>Êtes-vous sûr de vouloir supprimer ce producteur&nbsp;?</p>
+                    <div className="flex justify-end gap-2">
+                        <SecondaryButton
+                            type="button"
+                            onClick={() => setShowDeleteModal(false)}
+                        >
+                            Annuler
+                        </SecondaryButton>
+                        <DangerButton type="button" onClick={confirmDelete}>
+                            Supprimer
+                        </DangerButton>
+                    </div>
+                </div>
             </Modal>
         </FrontOffice>
     );
