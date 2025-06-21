@@ -2,12 +2,15 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "check-types": "tsc --noEmit",
         "dev": "vite --open",
+        "build": "tsc && vite build",
+        "global-test": "pnpm lint-fix && pnpm check-types && pnpm unit-test-once",
         "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
         "lint-fix": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix",
-        "build": "tsc && vite build",
-        "test": "vitest"
+        "check-types": "tsc --noEmit",
+        "unit-test-watch": "vitest watch",
+        "unit-test-once": "vitest run",
+        "unit-test-report": "vitest run --mode dev --reporter=html --coverage.enabled=true && vite preview --outDir report --open"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
@@ -23,6 +26,8 @@
         "@typescript-eslint/eslint-plugin": "^7.16.0",
         "@typescript-eslint/parser": "^7.16.0",
         "@vitejs/plugin-react": "^4.2.0",
+        "@vitest/coverage-v8": "3.2.4",
+        "@vitest/ui": "3.2.4",
         "autoprefixer": "^10.4.12",
         "concurrently": "^9.0.1",
         "eslint": "^8.57.0",

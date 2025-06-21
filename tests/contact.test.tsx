@@ -8,14 +8,14 @@ vi.mock('@inertiajs/react', () => {
     return {
         router: { post: vi.fn() },
         usePage: () => ({ props: { adminSequence: [] } }),
-        Link: (props: any) => <a {...props}>{props.children}</a>,
+        Link: (props) => <a {...props}>{props.children}</a>,
     };
 });
 
 describe('Contact form', () => {
     it('submits form data via router.post', async () => {
         const mockPost = vi.fn();
-        (router as any).post = mockPost;
+        router.post = mockPost;
 
         render(<Contact />);
 
