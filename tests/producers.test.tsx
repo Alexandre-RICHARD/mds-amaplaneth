@@ -7,23 +7,21 @@ vi.mock('@inertiajs/react', () => ({
 }));
 
 // @ts-ignore
-(global as any).window.axios = {
-    get: vi.fn().mockResolvedValue({ data: [
-        {
-            id: 1,
-            profile_picture: 1,
-            first_name: 'John',
-            last_name: 'Doe',
-            address_road: '1 rue test',
-            zipcode: 11111,
-            city: 'Test',
-            description: 'desc',
-        },
-    ] }),
-    delete: vi.fn().mockResolvedValue({}),
-    post: vi.fn().mockResolvedValue({}),
-    put: vi.fn().mockResolvedValue({}),
-};
+(global as any).fetch = vi.fn().mockResolvedValue({
+    json: () =>
+        Promise.resolve([
+            {
+                id: 1,
+                profile_picture: 1,
+                first_name: 'John',
+                last_name: 'Doe',
+                address_road: '1 rue test',
+                zipcode: 11111,
+                city: 'Test',
+                description: 'desc',
+            },
+        ]),
+});
 
 describe('Delete producer confirmation', () => {
     it('shows a confirmation modal before deletion', async () => {

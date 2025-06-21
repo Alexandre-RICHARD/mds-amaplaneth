@@ -38,9 +38,9 @@ export default function Producers() {
     }, []);
 
     function fetchProducers() {
-        window.axios
-            .get(route('producers.show'))
-            .then((r) => setProducers(r.data));
+        fetch(route('producers.show'))
+            .then((r) => r.json())
+            .then((data) => setProducers(data));
     }
 
     function handleEdit(prod?: Producer) {
@@ -57,15 +57,17 @@ export default function Producers() {
         if (deleteId === null) {
             return;
         }
-        window.axios.delete(route('producers.destroy', deleteId)).then(() => {
-            addToast({
-                title: 'Producteur supprimé',
-                variant: 'success',
-            });
-            setShowDeleteModal(false);
-            setDeleteId(null);
-            fetchProducers();
-        });
+        fetch(route('producers.destroy', deleteId), { method: 'DELETE' }).then(
+            () => {
+                addToast({
+                    title: 'Producteur supprimé',
+                    variant: 'success',
+                });
+                setShowDeleteModal(false);
+                setDeleteId(null);
+                fetchProducers();
+            },
+        );
     }
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -90,8 +92,20 @@ export default function Producers() {
             profile_picture: '1',
         };
         const request = editing
-            ? window.axios.put(route('producers.update', editing.id), data)
-            : window.axios.post(route('producers.store'), data);
+            ? fetch(route('producers.update', editing.id), {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+              })
+            : fetch(route('producers.store'), {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+              });
         request.then(() => {
             setShowModal(false);
             setEditing(null);
