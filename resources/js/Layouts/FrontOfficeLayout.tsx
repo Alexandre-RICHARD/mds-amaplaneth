@@ -45,7 +45,7 @@ export default function FrontOffice({
             >
                 {header}
             </div>
-            <main className="mx-auto w-full max-w-[950px] flex-grow px-4 py-8">
+            <main className="mx-auto w-full max-w-[1100px] flex-grow px-5 py-8">
                 {children}
             </main>
             <Footer />
