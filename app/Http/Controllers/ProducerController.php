@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producer;
-use Illuminate\Support\Arr;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class ProducerController extends Controller
@@ -19,16 +19,28 @@ class ProducerController extends Controller
             'city' => ['required', 'string'],
             'description' => ['required', 'string'],
             'pictures' => ['array'],
-            'pictures.*' => ['integer'],
+            'pictures.*' => ['file', 'image'],
         ]);
 
-        $pictures = $data['pictures'] ?? [];
+        $files = $request->file('pictures', []);
         unset($data['pictures']);
 
         $producer = Producer::create($data);
 
-        if (!empty($pictures)) {
-            $producer->images()->attach($pictures);
+        $ids = [];
+        foreach ($files as $file) {
+            $binary = file_get_contents($file->getRealPath());
+            $image = Image::create([
+                'title' => $file->getClientOriginalName(),
+                'alt_text' => $file->getClientOriginalName(),
+                'url' => 'data:' . $file->getMimeType() . ';base64,' . base64_encode($binary),
+                'data' => $binary,
+            ]);
+            $ids[] = $image->id;
+        }
+
+        if (!empty($ids)) {
+            $producer->images()->attach($ids);
         }
 
         return 'success';
@@ -55,15 +67,30 @@ class ProducerController extends Controller
             'city' => ['required', 'string'],
             'description' => ['required', 'string'],
             'pictures' => ['array'],
-            'pictures.*' => ['integer'],
+            'pictures.*' => ['file', 'image'],
         ]);
 
-        $pictures = $data['pictures'] ?? [];
+        $files = $request->file('pictures', []);
         unset($data['pictures']);
 
         $producer = Producer::findOrFail($id);
         $producer->update($data);
-        $producer->images()->sync($pictures);
+
+        $ids = [];
+        foreach ($files as $file) {
+            $binary = file_get_contents($file->getRealPath());
+            $image = Image::create([
+                'title' => $file->getClientOriginalName(),
+                'alt_text' => $file->getClientOriginalName(),
+                'url' => 'data:' . $file->getMimeType() . ';base64,' . base64_encode($binary),
+                'data' => $binary,
+            ]);
+            $ids[] = $image->id;
+        }
+
+        if (!empty($ids)) {
+            $producer->images()->syncWithoutDetaching($ids);
+        }
 
         return ['success' => 'Producer mis à jour'];
     }

@@ -81,44 +81,17 @@ export default function Producers() {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.currentTarget;
-        const data = {
-            first_name: (
-                form.elements.namedItem('first_name') as HTMLInputElement
-            ).value,
-            last_name: (
-                form.elements.namedItem('last_name') as HTMLInputElement
-            ).value,
-            address_road: (
-                form.elements.namedItem('address_road') as HTMLInputElement
-            ).value,
-            zipcode: (form.elements.namedItem('zipcode') as HTMLInputElement)
-                .value,
-            city: (form.elements.namedItem('city') as HTMLInputElement).value,
-            description: (
-                form.elements.namedItem('description') as HTMLInputElement
-            ).value,
-            profile_picture: '1',
-            pictures: (
-                form.elements.namedItem('pictures') as HTMLInputElement
-            ).value
-                .split(',')
-                .map((v) => parseInt(v, 10))
-                .filter((v) => !Number.isNaN(v)),
-        };
+        const data = new FormData(form);
+        data.append('profile_picture', '1');
+
         const request = editing
             ? fetch(route('producers.update', editing.id), {
                   method: 'PUT',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(data),
+                  body: data,
               })
             : fetch(route('producers.store'), {
                   method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(data),
+                  body: data,
               });
         request.then(() => {
             setShowModal(false);
@@ -294,15 +267,12 @@ export default function Producers() {
                         required
                         className="w-full rounded"
                     />
-                    <InputLabel htmlFor="pictures">
-                        Photos (IDs séparés par des virgules)
-                    </InputLabel>
+                    <InputLabel htmlFor="pictures">Photos</InputLabel>
                     <TextInput
                         id="pictures"
-                        name="pictures"
-                        defaultValue={
-                            editing?.images.map((i) => i.id).join(',') ?? ''
-                        }
+                        name="pictures[]"
+                        type="file"
+                        multiple
                         className="w-full rounded"
                     />
                     <div className="flex justify-end gap-2 pt-4">
