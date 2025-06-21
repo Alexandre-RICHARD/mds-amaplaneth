@@ -27,7 +27,7 @@ class AdminController extends Controller
         $request->session()->put('admin_login_token', $token);
         $request->session()->put('admin_login_token_expires', $expires);
 
-        return ['token' => $token];
+        return redirect()->route('admin.login', ['token' => $token]);
     }
 
     public function loginPage(Request $request): Response
