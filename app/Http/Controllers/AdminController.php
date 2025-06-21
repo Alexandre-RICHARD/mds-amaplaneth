@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use App\Models\AdminPassword;
 use App\Mail\AdminForgotPasswordMail;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -64,7 +65,8 @@ class AdminController extends Controller
             'password' => ['required'],
         ]);
 
-        $hash = env('ADMIN_PASSWORD_HASH');
+        $admin = AdminPassword::find(1);
+        $hash = $admin?->password;
         if (!$hash || !Hash::check($request->input('password'), $hash)) {
             return back()->withErrors(['password' => 'Mot de passe invalide']);
         }
@@ -85,11 +87,56 @@ class AdminController extends Controller
 
     public function forgotPassword()
     {
+        $admin = AdminPassword::firstOrCreate(['id' => 1]);
+
+        $token = Str::random(40);
+        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $expires = Carbon::now()->addMinutes($duration)->timestamp;
+        $admin->reset_token = $token;
+        $admin->reset_token_expires = $expires;
+        $admin->save();
+
         $email = env('ADMIN_BACKUP_EMAIL');
         if ($email) {
-            Mail::to($email)->send(new AdminForgotPasswordMail());
+            $url = route('admin.setPassword', ['token' => $token]);
+            Mail::to($email)->send(new AdminForgotPasswordMail($url));
         }
 
         return back();
+    }
+
+    public function setPasswordPage(Request $request): Response
+    {
+        $admin = AdminPassword::find(1);
+        $token = $request->query('token');
+        if (!$admin || !$admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
+            abort(403);
+        }
+
+        return Inertia::render('Admin/SetPassword', [
+            'token' => $token,
+        ]);
+    }
+
+    public function setPassword(Request $request)
+    {
+        $admin = AdminPassword::find(1);
+        $token = $request->input('token');
+        if (!$admin || !$admin->reset_token || $admin->reset_token !== $token || $admin->reset_token_expires < time()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'password' => ['required'],
+        ]);
+
+        $admin->password = Hash::make($request->input('password'));
+        $admin->reset_token = null;
+        $admin->reset_token_expires = null;
+        $admin->save();
+
+        $request->session()->put('is_admin', true);
+
+        return redirect()->route('home');
     }
 }
