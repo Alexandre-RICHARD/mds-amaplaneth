@@ -23,5 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->renderable(function (\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $e) {
+            if (in_array($e->getStatusCode(), [403, 404])) {
+                return redirect()->route('home');
+            }
+        });
     })->create();
