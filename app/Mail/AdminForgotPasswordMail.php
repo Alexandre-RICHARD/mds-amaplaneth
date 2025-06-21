@@ -19,7 +19,7 @@ class AdminForgotPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Demande de r\xC3\xA9initialisation du mot de passe admin',
+            subject: 'Demande de réinitialisation du mot de passe admin',
         );
     }
 

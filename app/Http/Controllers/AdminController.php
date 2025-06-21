@@ -27,27 +27,25 @@ class AdminController extends Controller
         $request->session()->put('admin_login_token', $token);
         $request->session()->put('admin_login_token_expires', $expires);
 
-        return redirect()->route('admin.login', ['token' => $token]);
+        return redirect()->route('admin.login');
     }
 
     public function loginPage(Request $request): Response
     {
         $token = $request->session()->get('admin_login_token');
         $expires = $request->session()->get('admin_login_token_expires');
-        if (!$token || $token !== $request->query('token') || $expires < time()) {
+        if (!$token || $expires < time()) {
             abort(403);
         }
 
-        return Inertia::render('Admin/Login', [
-            'token' => $request->query('token'),
-        ]);
+        return Inertia::render('Admin/Login');
     }
 
     public function login(Request $request)
     {
         $token = $request->session()->get('admin_login_token');
         $expires = $request->session()->get('admin_login_token_expires');
-        if (!$token || $token !== $request->input('token') || $expires < time()) {
+        if (!$token || $expires < time()) {
             abort(403);
         }
 
@@ -78,21 +76,29 @@ class AdminController extends Controller
         return redirect()->route('home');
     }
 
-    public function forgotPassword()
+    public function forgotPassword(Request $request)
     {
-        $admin = AdminPassword::firstOrCreate(['id' => 1]);
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
 
-        $token = Str::random(40);
-        $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
-        $expires = Carbon::now()->addMinutes($duration)->timestamp;
-        $admin->reset_token = $token;
-        $admin->reset_token_expires = $expires;
-        $admin->save();
-
+        $inputEmail = $request->input('email');
         $email = env('ADMIN_BACKUP_EMAIL');
-        if ($email) {
+
+        if ($email && $inputEmail === $email) {
+            $admin = AdminPassword::firstOrCreate(['id' => 1]);
+
+            $token = Str::random(40);
+            $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
+            $expires = Carbon::now()->addMinutes($duration)->timestamp;
+            $admin->reset_token = $token;
+            $admin->reset_token_expires = $expires;
+            $admin->save();
+
             $url = route('admin.setPassword', ['token' => $token]);
             Mail::to($email)->send(new AdminForgotPasswordMail($url));
+        } else {
+            return back()->withErrors(['email' => 'Adresse email incorrecte']);
         }
 
         return back();
@@ -134,6 +140,6 @@ class AdminController extends Controller
         $request->session()->put('admin_login_token', $token);
         $request->session()->put('admin_login_token_expires', $expires);
 
-        return redirect()->route('admin.login', ['token' => $token]);
+        return redirect()->route('admin.login');
     }
 }
