@@ -16,28 +16,13 @@ class AdminController extends Controller
 {
     public function keyStep(Request $request)
     {
-        $sequence = explode(',', env('ADMIN_SEQUENCE'));
-        $position = $request->session()->get('admin_key_position', 0);
+        $token = Str::random(40);
+        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $expires = Carbon::now()->addMinutes($duration)->timestamp;
+        $request->session()->put('admin_login_token', $token);
+        $request->session()->put('admin_login_token_expires', $expires);
 
-        if ($request->query('key') === ($sequence[$position] ?? null)) {
-            $position++;
-            if ($position === count($sequence)) {
-                $request->session()->forget('admin_key_position');
-                $token = Str::random(40);
-                $duration = env('ADMIN_TOKEN_LIFETIME', 30);
-                $expires = Carbon::now()->addMinutes($duration)->timestamp;
-                $request->session()->put('admin_login_token', $token);
-                $request->session()->put('admin_login_token_expires', $expires);
-
-                return ['token' => $token];
-            }
-
-            $request->session()->put('admin_key_position', $position);
-        } else {
-            $request->session()->put('admin_key_position', 0);
-        }
-
-        return [];
+        return ['token' => $token];
     }
 
     public function loginPage(Request $request): Response
@@ -73,7 +58,9 @@ class AdminController extends Controller
 
         $request->session()->forget('admin_login_token');
         $request->session()->forget('admin_login_token_expires');
+        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
         $request->session()->put('is_admin', true);
+        $request->session()->put('is_admin_expires', Carbon::now()->addMinutes($duration)->timestamp);
 
         return redirect()->route('home');
     }
@@ -81,6 +68,7 @@ class AdminController extends Controller
     public function logout(Request $request)
     {
         $request->session()->forget('is_admin');
+        $request->session()->forget('is_admin_expires');
 
         return redirect()->route('home');
     }
@@ -135,8 +123,12 @@ class AdminController extends Controller
         $admin->reset_token_expires = null;
         $admin->save();
 
-        $request->session()->put('is_admin', true);
+        $token = Str::random(40);
+        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $expires = Carbon::now()->addMinutes($duration)->timestamp;
+        $request->session()->put('admin_login_token', $token);
+        $request->session()->put('admin_login_token_expires', $expires);
 
-        return redirect()->route('home');
+        return redirect()->route('admin.login', ['token' => $token]);
     }
 }
