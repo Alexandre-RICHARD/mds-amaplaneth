@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
             $expires = $request->session()->get('is_admin_expires', 0);
             if ($expires >= time()) {
                 $isAdmin = true;
-                $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+                $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
                 $request->session()->put('is_admin_expires', Carbon::now()->addMinutes($duration)->timestamp);
             } else {
                 $request->session()->forget('is_admin');

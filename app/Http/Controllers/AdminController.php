@@ -63,7 +63,7 @@ class AdminController extends Controller
 
         $request->session()->forget('admin_login_token');
         $request->session()->forget('admin_login_token_expires');
-        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
         $request->session()->put('is_admin', true);
         $request->session()->put('is_admin_expires', Carbon::now()->addMinutes($duration)->timestamp);
 
@@ -83,7 +83,7 @@ class AdminController extends Controller
         $admin = AdminPassword::firstOrCreate(['id' => 1]);
 
         $token = Str::random(40);
-        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
         $expires = Carbon::now()->addMinutes($duration)->timestamp;
         $admin->reset_token = $token;
         $admin->reset_token_expires = $expires;
@@ -129,7 +129,7 @@ class AdminController extends Controller
         $admin->save();
 
         $token = Str::random(40);
-        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
         $expires = Carbon::now()->addMinutes($duration)->timestamp;
         $request->session()->put('admin_login_token', $token);
         $request->session()->put('admin_login_token_expires', $expires);
