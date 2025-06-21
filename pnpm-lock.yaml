@@ -60,9 +60,6 @@ importers:
       autoprefixer:
         specifier: ^10.4.12
         version: 10.4.21(postcss@8.5.3)
-      axios:
-        specifier: ^1.7.4
-        version: 1.8.3
       concurrently:
         specifier: ^9.0.1
         version: 9.1.2

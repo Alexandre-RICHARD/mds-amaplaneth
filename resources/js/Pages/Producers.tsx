@@ -27,6 +27,8 @@ export default function Producers() {
     const [search, setSearch] = useState('');
     const [editing, setEditing] = useState<Producer | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [deleteId, setDeleteId] = useState<number | null>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const { props } = usePage<{ isAdmin: boolean }>();
     const isAdmin = props.isAdmin;
     const { addToast } = useToast();
@@ -36,9 +38,9 @@ export default function Producers() {
     }, []);
 
     function fetchProducers() {
-        window.axios
-            .get(route('producers.show'))
-            .then((r) => setProducers(r.data));
+        fetch(route('producers.show'))
+            .then((result) => result.json())
+            .then((data) => setProducers(data));
     }
 
     function handleEdit(prod?: Producer) {
@@ -47,13 +49,25 @@ export default function Producers() {
     }
 
     function handleDelete(id: number) {
-        window.axios.delete(route('producers.destroy', id)).then(() => {
-            addToast({
-                title: 'Producteur supprimé',
-                variant: 'success',
-            });
-            fetchProducers();
-        });
+        setDeleteId(id);
+        setShowDeleteModal(true);
+    }
+
+    function confirmDelete() {
+        if (deleteId === null) {
+            return;
+        }
+        fetch(route('producers.destroy', deleteId), { method: 'DELETE' }).then(
+            () => {
+                addToast({
+                    title: 'Producteur supprimé',
+                    variant: 'success',
+                });
+                setShowDeleteModal(false);
+                setDeleteId(null);
+                fetchProducers();
+            },
+        );
     }
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -78,8 +92,20 @@ export default function Producers() {
             profile_picture: '1',
         };
         const request = editing
-            ? window.axios.put(route('producers.update', editing.id), data)
-            : window.axios.post(route('producers.store'), data);
+            ? fetch(route('producers.update', editing.id), {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+              })
+            : fetch(route('producers.store'), {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+              });
         request.then(() => {
             setShowModal(false);
             setEditing(null);
@@ -264,6 +290,27 @@ export default function Producers() {
                         </DangerButton>
                     </div>
                 </form>
+            </Modal>
+            <Modal
+                show={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+            >
+                <div className="space-y-4 p-6">
+                    <p>
+                        Êtes-vous sûr de vouloir supprimer ce producteur&nbsp;?
+                    </p>
+                    <div className="flex justify-end gap-2">
+                        <SecondaryButton
+                            type="button"
+                            onClick={() => setShowDeleteModal(false)}
+                        >
+                            Annuler
+                        </SecondaryButton>
+                        <DangerButton type="button" onClick={confirmDelete}>
+                            Supprimer
+                        </DangerButton>
+                    </div>
+                </div>
             </Modal>
         </FrontOffice>
     );
