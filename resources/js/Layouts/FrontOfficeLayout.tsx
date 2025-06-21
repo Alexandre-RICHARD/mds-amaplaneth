@@ -1,6 +1,6 @@
 import backgroundVector from '@images/background.svg';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
-import { usePage } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -20,21 +20,7 @@ export default function FrontOffice({
                 position++;
                 if (position === sequence.length) {
                     position = 0;
-                    fetch(route('admin.keyStep'), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ sequence }),
-                    })
-                        .then((r) => r.json())
-                        .then((data) => {
-                            if (data.token) {
-                                window.location.href = route('admin.login', {
-                                    token: data.token,
-                                });
-                            }
-                        });
+                    router.post(route('admin.keyStep'), { sequence });
                 }
             } else {
                 position = 0;

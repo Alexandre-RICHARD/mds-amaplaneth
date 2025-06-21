@@ -22,12 +22,12 @@ class AdminController extends Controller
         }
 
         $token = Str::random(40);
-        $duration = env('ADMIN_TOKEN_LIFETIME', 30);
+        $duration = (int) env('ADMIN_TOKEN_LIFETIME', 30);
         $expires = Carbon::now()->addMinutes($duration)->timestamp;
         $request->session()->put('admin_login_token', $token);
         $request->session()->put('admin_login_token_expires', $expires);
 
-        return ['token' => $token];
+        return redirect()->route('admin.login', ['token' => $token]);
     }
 
     public function loginPage(Request $request): Response
