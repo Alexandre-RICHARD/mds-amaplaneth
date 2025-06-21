@@ -6,6 +6,11 @@ use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
+Route::group(['prefix' => 'producers'], function () {
+    Route::get('', [ProducerController::class, 'allProducers'])->name('producers.show');
+    Route::get('{id}', [ProducerController::class, 'getProducer'])->name('producers.read');
+});
+
 Route::middleware('admin')->group(function () {
 
 Route::group(['prefix' => 'contracts'], function () {
@@ -26,8 +31,6 @@ Route::group(['prefix' => 'images'], function () {
 
 Route::group(['prefix' => 'producers'], function () {
     Route::post('', [ProducerController::class, 'createProducer'])->name('producers.store');
-    Route::get('{id}', [ProducerController::class, 'getProducer'])->name('producers.read');
-    Route::get('', [ProducerController::class, 'allProducers'])->name('producers.show');
     Route::put('{id}', [ProducerController::class, 'editProducer'])->name('producers.update');
     Route::delete('{id}', [ProducerController::class, 'destroyProducer'])->name('producers.destroy');
 });
