@@ -65,7 +65,7 @@ export default function Header() {
                         Nos Contrats
                     </NavLink>
                     <NavLink
-                        href={route('home')}
+                        href={route('farmers')}
                         active={route().current('farmers')}
                     >
                         Nos Producteurs
@@ -97,7 +97,7 @@ export default function Header() {
                     Nos Contrats
                 </NavLink>
                 <NavLink
-                    href={route('home')}
+                    href={route('farmers')}
                     active={route().current('farmers')}
                 >
                     Nos Producteurs
