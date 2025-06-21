@@ -1,15 +1,21 @@
 // tests/UserForm.test.jsx
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import Contact from '../resources/js/Pages/Contact';
 
-vi.mock('@inertiajs/inertia'); // Mock Inertia for POST requests
+vi.mock('@inertiajs/react', () => {
+    return {
+        router: { post: vi.fn() },
+        usePage: () => ({ props: { adminSequence: [] } }),
+        Link: (props: any) => <a {...props}>{props.children}</a>,
+    };
+});
 
 describe('Contact form', () => {
-    it('submits form data via Inertia.post', async () => {
+    it('submits form data via router.post', async () => {
         const mockPost = vi.fn();
-        Inertia.post = mockPost;
+        (router as any).post = mockPost;
 
         render(<Contact />);
 
