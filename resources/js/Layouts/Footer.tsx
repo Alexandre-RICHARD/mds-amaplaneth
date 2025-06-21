@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <div>
             <footer className="mt-24 w-full rounded-t-xl bg-[#446D49] p-5 font-bold text-white md:flex md:justify-between">
-                <div className="grid w-full grid-cols-[1fr_2fr] items-center md:w-1/3 md:mb-0 mb-4">
+                <div className="mb-4 grid grid-cols-[1fr_2fr] items-center md:mb-0">
                     <Link href="/" className="flex justify-center">
                         <ApplicationLogo className="block h-auto w-[80%] fill-current text-gray-800 dark:text-gray-200" />
                     </Link>

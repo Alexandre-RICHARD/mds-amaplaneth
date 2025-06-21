@@ -32,7 +32,7 @@ export default function FrontOffice({
     }, [props.adminSequence]);
     return (
         <div
-            className="absolute -z-10 bg-top bg-repeat-y"
+            className="min-h-screen bg-top bg-repeat-y"
             style={{
                 backgroundImage: `url(${backgroundVector})`,
                 backgroundSize: '100% auto',
