@@ -22,6 +22,10 @@ Route::get('/contrat', function () {
     return Inertia::render('Contract');
 })->name('contract');
 
+Route::get('/producteurs', function () {
+    return Inertia::render('Producers');
+})->name('farmers');
+
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');

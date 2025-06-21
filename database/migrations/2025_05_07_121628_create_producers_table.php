@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('zipcode');
             $table->string('city');
             $table->text('description');
+            $table->timestamps();
         });
     }
 

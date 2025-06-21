@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('label');
             $table->date('season_start')->nullable();
             $table->date('season_end')->nullable();
+            $table->timestamps();
         });
     }
 
