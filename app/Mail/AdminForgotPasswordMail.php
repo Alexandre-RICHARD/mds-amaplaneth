@@ -12,6 +12,10 @@ class AdminForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public function __construct(private string $url)
+    {
+    }
+
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -24,7 +28,7 @@ class AdminForgotPasswordMail extends Mailable
         return new Content(
             view: 'mail',
             with: [
-                'content' => 'Une demande de r\xC3\xA9initialisation du mot de passe administrateur a \xC3\xA9t\xC3\xA9 effectu\xC3\xA9e.',
+                'content' => "Cliquez sur le lien suivant pour d\xC3\xA9finir le mot de passe administrateur : {$this->url}",
             ],
         );
     }
