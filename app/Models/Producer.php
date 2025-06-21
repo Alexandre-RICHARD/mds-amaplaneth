@@ -11,6 +11,8 @@ class Producer extends Model
 
     protected $table = "producers";
 
+    public $timestamps = false;
+
     protected $fillable = [
         'profile_picture',
         'first_name',
