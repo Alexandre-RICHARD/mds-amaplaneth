@@ -32,7 +32,7 @@ export default function FrontOffice({
     }, [props.adminSequence]);
     return (
         <div
-            className="absolute -z-10 bg-top bg-repeat-y"
+            className="min-h-screen bg-top bg-repeat-y"
             style={{
                 backgroundImage: `url(${backgroundVector})`,
                 backgroundSize: '100% auto',
@@ -40,12 +40,12 @@ export default function FrontOffice({
         >
             <Header />
             <div
-                className="flex h-[340px] items-end bg-stone-900 bg-cover bg-center p-4"
+                className="flex h-[200px] items-end bg-stone-900 bg-cover bg-center p-4 md:h-[340px]"
                 style={{ backgroundImage: `url(${image})` }}
             >
                 {header}
             </div>
-            <main className="mx-auto w-full max-w-[950px] flex-grow px-4 py-8">
+            <main className="mx-auto w-full max-w-[1100px] flex-grow px-5 py-8">
                 {children}
             </main>
             <Footer />

@@ -106,7 +106,7 @@ export default function Home() {
                     alt="Emplacement de l'AMAP au sein de la ville d'Angers"
                     srcSet={`${map} 800w, ${largeMap} 1200w`}
                     sizes="(max-width: 800px) 100vw, 100vw"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain"
                 />
 
                 {/* <img
