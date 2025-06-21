@@ -1,5 +1,6 @@
 import backgroundVector from '@images/background.svg';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
+import { usePage } from '@inertiajs/react';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -8,22 +9,35 @@ export default function FrontOffice({
     image,
     children,
 }: PropsWithChildren<{ header?: ReactNode; image?: string }>) {
+    const { props } = usePage<{ adminSequence: string[] }>();
+
     useEffect(() => {
+        const sequence = props.adminSequence ?? [];
+        let position = 0;
+
         function onKeyDown(e: KeyboardEvent) {
-            fetch(route('admin.keyStep', { key: e.key }))
-                .then((r) => r.json())
-                .then((data) => {
-                    if (data.token) {
-                        window.location.href = route('admin.login', {
-                            token: data.token,
+            if (e.key === sequence[position]) {
+                position++;
+                if (position === sequence.length) {
+                    position = 0;
+                    fetch(route('admin.keyStep'))
+                        .then((r) => r.json())
+                        .then((data) => {
+                            if (data.token) {
+                                window.location.href = route('admin.login', {
+                                    token: data.token,
+                                });
+                            }
                         });
-                    }
-                });
+                }
+            } else {
+                position = 0;
+            }
         }
 
         window.addEventListener('keydown', onKeyDown);
         return () => window.removeEventListener('keydown', onKeyDown);
-    }, []);
+    }, [props.adminSequence]);
     return (
         <div
             className="absolute -z-10 bg-top bg-repeat-y"

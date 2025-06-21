@@ -17,8 +17,8 @@ APP_KEY : Clé de chiffrement utilisée par Laravel. Générée via `php artisan
 APP_URL : URL publique de l'application (ex : http://localhost:8000 en local)
 APP_NAME : Nom de l’application côté Laravel
 VITE_APP_NAME : Nom de l’application utilisé côté React via Vite, reprend APP_NAME, mais peut être personnalisé si nécessaire
-ADMIN_SEQUENCE : Suite de touches à saisir pour accéder au formulaire d'administration
-ADMIN_TOKEN_LIFETIME : Durée de vie du token de connexion
+ADMIN_SEQUENCE : Suite de touches à saisir pour accéder au formulaire d'administration. La séquence est vérifiée côté navigateur.
+ADMIN_TOKEN_LIFETIME : Durée de vie du token de connexion et de la session administrateur
 ADMIN_BACKUP_EMAIL : Adresse où sera envoyé le lien d'initialisation du mot de passe administrateur
 
 MAIL_MAILER : Méthode d'envoi des emails. log pour enregistrer les emails dans les logs (utile en local), smtp en production.
