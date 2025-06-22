@@ -50,7 +50,7 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'password' => ['required'],
+            'password' => ['required', 'confirmed'],
         ]);
 
         $admin = AdminPassword::find(1);
@@ -126,7 +126,7 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'password' => ['required'],
+            'password' => ['required', 'confirmed'],
         ]);
 
         $admin->password = Hash::make($request->input('password'));
@@ -140,6 +140,11 @@ class AdminController extends Controller
         $request->session()->put('admin_login_token', $token);
         $request->session()->put('admin_login_token_expires', $expires);
 
-        return redirect()->route('admin.login');
+        return redirect()->route('admin.passwordChanged');
+    }
+
+    public function passwordChangedPage(): Response
+    {
+        return Inertia::render('Admin/PasswordChanged');
     }
 }

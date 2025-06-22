@@ -4,11 +4,18 @@ import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 
+type Props = {
+    header?: ReactNode;
+    image?: string;
+    isOnlyContentDisplayed?: boolean;
+};
+
 export default function FrontOffice({
     header,
     image,
+    isOnlyContentDisplayed = false,
     children,
-}: PropsWithChildren<{ header?: ReactNode; image?: string }>) {
+}: PropsWithChildren<Props>) {
     const { props } = usePage<{ adminSequence: string[] }>();
 
     useEffect(() => {
@@ -38,17 +45,22 @@ export default function FrontOffice({
                 backgroundSize: '100% auto',
             }}
         >
-            <Header />
-            <div
-                className="flex h-[200px] items-end bg-stone-900 bg-cover bg-center p-4 md:h-[340px]"
-                style={{ backgroundImage: `url(${image})` }}
-            >
-                {header}
-            </div>
-            <main className="mx-auto w-full max-w-[1100px] flex-grow px-5 py-8">
+            {!isOnlyContentDisplayed && (
+                <>
+                    <Header />
+                    <div
+                        className="flex h-[200px] items-end bg-stone-900 bg-cover bg-center p-4 md:h-[340px]"
+                        style={{ backgroundImage: `url(${image})` }}
+                    >
+                        {header}
+                    </div>
+                </>
+            )}
+
+            <main className="h-100 mx-auto w-full max-w-[1100px] flex-grow px-5 py-8">
                 {children}
             </main>
-            <Footer />
+            {!isOnlyContentDisplayed && <Footer />}
         </div>
     );
 }

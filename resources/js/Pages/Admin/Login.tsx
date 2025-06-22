@@ -46,7 +46,7 @@ export default function AdminLogin() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="rounded border p-2"
+                            className="rounded border p-2 pr-6"
                             placeholder="Mot de passe"
                         />
                         <button
@@ -74,7 +74,7 @@ export default function AdminLogin() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="rounded border p-2"
+                            className="rounded border p-2 pr-6"
                             placeholder="Email de récupération"
                         />
                         <button
