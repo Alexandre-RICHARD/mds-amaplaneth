@@ -20,4 +20,9 @@ class Producer extends Model
         'city',
         'description',
     ];
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class, 'producer_images', 'producer_id', 'image_id');
+    }
 }

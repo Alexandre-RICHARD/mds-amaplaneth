@@ -11,6 +11,13 @@ import nearFarmers from '@images/near_farmers.jpg';
 import { usePage } from '@inertiajs/react';
 import { FormEvent, useEffect, useState } from 'react';
 
+interface Image {
+    id: number;
+    title: string;
+    alt_text: string;
+    url: string;
+}
+
 interface Producer {
     id: number;
     profile_picture: number;
@@ -20,6 +27,7 @@ interface Producer {
     zipcode: number;
     city: string;
     description: string;
+    images: Image[];
 }
 
 export default function Producers() {
@@ -90,6 +98,12 @@ export default function Producers() {
                 form.elements.namedItem('description') as HTMLInputElement
             ).value,
             profile_picture: '1',
+            pictures: (
+                form.elements.namedItem('pictures') as HTMLInputElement
+            ).value
+                .split(',')
+                .map((v) => parseInt(v, 10))
+                .filter((v) => !Number.isNaN(v)),
         };
         const request = editing
             ? fetch(route('producers.update', editing.id), {
@@ -158,6 +172,7 @@ export default function Producers() {
                             <>
                                 <img
                                     src={
+                                        p.images[0]?.url ||
                                         placeholders[
                                             index % placeholders.length
                                         ]
@@ -217,6 +232,7 @@ export default function Producers() {
                                 </div>
                                 <img
                                     src={
+                                        p.images[0]?.url ||
                                         placeholders[
                                             index % placeholders.length
                                         ]
@@ -276,6 +292,17 @@ export default function Producers() {
                         name="description"
                         defaultValue={editing?.description ?? ''}
                         required
+                        className="w-full rounded"
+                    />
+                    <InputLabel htmlFor="pictures">
+                        Photos (IDs séparés par des virgules)
+                    </InputLabel>
+                    <TextInput
+                        id="pictures"
+                        name="pictures"
+                        defaultValue={
+                            editing?.images.map((i) => i.id).join(',') ?? ''
+                        }
                         className="w-full rounded"
                     />
                     <div className="flex justify-end gap-2 pt-4">
