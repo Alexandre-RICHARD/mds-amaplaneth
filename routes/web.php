@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Mail\ContactMail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,9 +29,23 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
 
-// Route::post('/send-mail', function (Request $request) {
-//     Mail::to('amaplaneth@riseup.net')->send(new ContactMail($request));
-// })->name('send');
+Route::post('/contact-send-mail', function (Request $request) {
+    $data = $request->validate([
+        'name' => ['required'],
+        'email' => ['required', 'email'],
+        'subject' => ['required'],
+        'body' => ['required'],
+        'phone' => ['nullable'],
+    ]);
+
+    $recipient = env('ADMIN_CONTACT_MAIL');
+
+    if ($recipient) {
+        Mail::to($recipient)->send(new ContactMail((object) $data));
+    }
+
+    return back();
+})->name('contact.send');
 
 Route::post('/admin/key-step', [AdminController::class, 'keyStep'])->name('admin.keyStep');
 Route::get('/admin/login', [AdminController::class, 'loginPage'])->name('admin.login');

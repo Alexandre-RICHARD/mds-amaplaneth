@@ -23,9 +23,10 @@ export default function Contact() {
             name: name,
             email: email,
             subject: subject,
+            phone: phone,
             body: content,
         };
-        router.post('/send-mail', message);
+        router.post('/contact-send-mail', message);
     };
 
     return (
