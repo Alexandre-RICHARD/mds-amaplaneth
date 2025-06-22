@@ -37,6 +37,7 @@ Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.lo
 Route::post('/admin/forgot-password', [AdminController::class, 'forgotPassword'])->name('admin.forgot');
 Route::get('/admin/set-password', [AdminController::class, 'setPasswordPage'])->name('admin.setPassword');
 Route::post('/admin/set-password', [AdminController::class, 'setPassword'])->name('admin.setPassword.post');
+Route::get('/admin/password-changed', [AdminController::class, 'passwordChangedPage'])->name('admin.passwordChanged');
 
 Route::fallback(function () {
     return redirect()->route('home');
