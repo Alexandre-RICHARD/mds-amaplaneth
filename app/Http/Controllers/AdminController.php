@@ -50,7 +50,7 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'password' => ['required', 'confirmed'],
+            'password' => ['required'],
         ]);
 
         $admin = AdminPassword::find(1);
