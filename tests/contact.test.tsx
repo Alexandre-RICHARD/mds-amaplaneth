@@ -27,16 +27,21 @@ describe('Contact form', () => {
             target: { value: 'john@example.com' },
         });
 
+        fireEvent.change(screen.getByLabelText(/Numéro de téléphone/i), {
+            target: { value: '0123456789' },
+        });
+
         fireEvent.change(screen.getByLabelText(/Message/i), {
             target: { value: 'Hello' },
         });
 
         fireEvent.click(screen.getByRole('button', { name: /Envoyer/i }));
 
-        expect(mockPost).toHaveBeenCalledWith('/send-mail', {
+        expect(mockPost).toHaveBeenCalledWith('/contact-send-mail', {
             name: 'John Doe',
             email: 'john@example.com',
             subject: 'Un curieux',
+            phone: '0123456789',
             body: 'Hello',
         });
     });

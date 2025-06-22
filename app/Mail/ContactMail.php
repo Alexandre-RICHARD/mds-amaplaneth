@@ -46,10 +46,16 @@ class ContactMail extends Mailable
      */
     public function content(): Content
     {
+        $content = $this->message->body;
+
+        if (! empty($this->message->phone)) {
+            $content .= "\n\nTel: {$this->message->phone}";
+        }
+
         return new Content(
             view: 'mail',
             with: [
-                'content' => $this->message->body,
+                'content' => $content,
             ]
         );
     }
